@@ -1,0 +1,27 @@
+# Node.js dependencies
+/node_modules
+
+# Compiled files
+/build
+/dist
+
+# Python dependencies
+/venv
+*.pyc
+
+# Django migrations
+/migrations
+
+# Local environment files
+.env
+
+# IDE or editor specific files
+.vscode
+.idea
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# MongoDB data directory
+/db/data
