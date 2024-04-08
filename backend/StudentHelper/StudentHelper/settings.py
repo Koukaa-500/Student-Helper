@@ -73,12 +73,7 @@ WSGI_APPLICATION = 'StudentHelper.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'democollection',
-    }
-}
+
 
 # DATABASES = {
 #     'default': {
@@ -87,6 +82,12 @@ DATABASES = {
         
 #     }
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',  # Use 'mongodb' as the database engine
+        'NAME': 'Student-HelperDB',  # Specify your MongoDB database name
+    }
+}
 
 
 # Password validation
