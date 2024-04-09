@@ -17,11 +17,11 @@ try:
 
     # insert a document into the Users collection
     new_user = {
-        'name': 'Alice',
-        'email': 'alice44@femail.com',
+        'name': 'Mohamed',
+        'email': 'osos.com',
         'password': 'password123',
     }
-    # Insert the document into the collection
+    # # Insert the document into the collection
     users_collection.insert_one(new_user)
     #check the number of documents in the collection
     num_documents = users_collection.count_documents({})
@@ -30,4 +30,5 @@ try:
 except Exception as e:
     # If any error occurs, print an error message
     print("Error: Failed to connect to MongoDB:", e)
+    
     
