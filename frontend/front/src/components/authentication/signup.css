@@ -1,0 +1,41 @@
+body {
+    background: #fdf8ee;
+    border-radius: 7px;
+   
+    margin-top: 30px;
+    margin-bottom: 200px;
+    margin-left: 200px;
+    margin-right: 200px;
+    background-image: url('../../assets/background.png');
+    overflow-y: hidden;
+  
+  }
+  .card {
+    background: linear-gradient(180deg, #f2ebdb 0%, #e7d5b2 63%, #8c887f 100%);
+    border-radius: 14;
+  }
+  
+  .box{
+      width: 500px;
+      height: 450px;
+      border-radius: 7px;
+      border-top: 1px solid #333;
+      border-right: 1px solid #333;
+      border-bottom: 1px solid #333;
+      border-left: 1px solid #333;
+      background: linear-gradient(180deg, #f2ebdb 0%, #e7d5b2 63%, #8c887f 100%);
+      /* background: transparent; */
+  }
+  .field{
+      width: 100%;
+  }
+  
+  .minibow{
+    height:50px;
+  }
+  
+  .navbar{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
