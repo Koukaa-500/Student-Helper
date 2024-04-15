@@ -18,7 +18,7 @@ class SignUp extends Component {
   toggleDiv = () => {
     // Toggle the state to show/hide the div
     this.setState((prevState) => ({
-      showDiv: !prevState.showDiv
+     showDiv: !prevState.showDiv
     }));
   };
   render() {
@@ -80,7 +80,7 @@ class SignUp extends Component {
                   </div>
                 </div>
 
-                <div className="box" style={{ marginLeft: "10px" }}>
+                <div className="box" style={{ marginLeft: "5px" }}>
                   <div className="box-body">
                     <div style={{ marginLeft: "150px", marginTop: "20px" }}>
                       <h1
