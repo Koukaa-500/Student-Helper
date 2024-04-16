@@ -1,0 +1,220 @@
+body {
+    background: #fdf8ee;
+    border-radius: 7px;
+    
+    margin-top: 30px;
+    margin-bottom: 200px;
+    margin-left: 200px;
+    margin-right: 200px;
+    background-image: url('../assets/background.png');
+    overflow-x: hidden;
+  
+  }
+  .card {
+    background: linear-gradient(180deg, #f2ebdb 0%, #e7d5b2 63%, #8c887f 100%);
+    border-radius: 14;
+  }
+ 
+  .boxn{
+      
+      width: 500px;
+      height: 450px;
+      border-radius: 7px;
+      border-top: 1px solid #333;
+      border-right: 1px solid #333;
+      border-bottom: 1px solid #333;
+      border-left: 1px solid #333;
+      background: linear-gradient(180deg, #f2ebdb 0%, #e7d5b2 63%, #8c887f 100%);
+      /* background: transparent; */
+  }
+  .field{
+      width: 100%;
+  }
+  
+  .minibow{
+    height:50px;
+  }
+  
+  .navbar{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+
+
+
+
+/* Home.module.css */
+
+  
+  
+  
+  
+  
+  .content {
+    
+    z-index: 1;
+    padding: 20px;
+    color: white;
+  }
+  
+  @keyframes moveUpDown {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(10px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  
+  .animation {
+    animation: moveUpDown 3s ease-in-out infinite;
+  }
+  
+  .transitionEffect {
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .transitionEffect:hover {
+    transform: translateY(-5px);
+  }
+  
+  .menu-bar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: auto;
+    height: 60px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+  .menu-item {
+    color: white;
+    font-size: 50px;
+    padding: 5px 10px;
+    margin-right: 20px;
+    cursor: pointer;
+  }
+  
+  .menu-item:last-child {
+    margin-right: 0;
+  }
+  
+  .sign-in-button {
+    padding: 8px 15px;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid black;
+    color: black;
+  }
+  
+  .btn-primary {
+    color: #fff;
+    background-color: purple;
+    border-color: purple;
+  }
+  
+  .btn-primary:hover {
+    background-color: darkpurple;
+    border-color: darkpurple;
+  }
+  
+  .menu-item {
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 5px 10px;
+    margin-right: 20px;
+    cursor: pointer;
+  }
+  
+  .menu-item:hover {
+    text-decoration: none;
+  }
+  
+  .transitionEffect {
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .transitionEffect:hover {
+    transform: translateY(-5px);
+  }
+  
+  #scrollAnimation {
+    transition: opacity 1s ease-in-out;
+  }
+  
+  .bigBody {
+    
+    /* Set your desired background color */
+    
+    width: 100vw; /* Set width to 100% of the viewport width */
+    height: 100vh; /* Set height to 100% of the viewport height */
+    
+    transition:
+      width 2s,
+      height 2s,
+      background-color 2s,
+      transform 2s;
+    
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+  }
+  
+  
+  
+  .box:hover {
+    background-color: #ffcccc;
+    width: 200px;
+    height: 200px;
+    transform: rotate(180deg);
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .fadeIn {
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .slideIn {
+    animation: slideIn 1s ease-in-out;
+  }
+  
+  .fadeIn {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    opacity: 1;
+  }
+  
+  .slideIn {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+    opacity: 1;
+  }
+  
+  
+  

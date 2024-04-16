@@ -2,33 +2,67 @@ import React, { useState } from 'react';
 import logo from "../../assets/logo.png";
 import loginImage from "../../assets/loginImage.png";
 import axios from 'axios'; // Import Axios for making HTTP requests
-
+import "../global.css"
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [currentUser, setCurrentUser] = useState();
   const client = axios.create({
-    baseUrl:"http://127.0.0.1:8000"
+    baseURL:"http://127.0.0.1:8000"
   });
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axios.post('http://localhost:8000/account/login/', {
-  //       email: email,
-  //       password: password
-  //     });
-  //     console.log(response.data);
-  //     // Redirect user or perform other actions upon successful login
-  //   } catch (err) {
-  //     setError(err.response.data.error);
-  //   }
-  // };
+  const submitLoagin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:8000/api/login/', {
+        email: email,
+        password: password
+      });
+      console.log(response.data);
+      // Redirect user or perform other actions upon successful login
+    } catch (err) {
+      setError(err.response.data.error);
+    }
+  };
 
-//   function LoginSubmit(e){
-//     e.preventDefault();
-//     client.post("/account/login",{email: email , password : password})
+  function submitLogin(e){
+    e.preventDefault();
+    client.post("/api/login",{email: email , password : password}).then(function(res) {
+          
+     
+          window.location.href = "/user";})
+  }
+// function submitLogin(e) {
+//   e.preventDefault();
+
+//   // Validate email and password
+//   if (!email || !password) {
+//     setError('Email and password are required.');
+//     return;
 //   }
+
+//   client.post(
+//     "/api/login",
+//     {
+//       email: email,
+//       password: password
+//     }
+//   )
+//   .then(function(res) {
+//     setCurrentUser(true);
+//     // Redirect user or perform other actions upon successful login
+//     window.location.href = "/user";
+//   })
+//   .catch(function(error) {
+//     // Handle error
+//     if (error.response) {
+//       setError(error.response.data.detail || 'An error occurred while logging in.');
+//     } else {
+//       setError("An error occurred while logging in.");
+//     }
+//   });
+// };
 
   function LoginSubmit(e) {
     // Prevent the default form submission behavior
@@ -37,6 +71,7 @@ const Login = () => {
     // Redirect the user to the "/user" page
     window.location.href = "/user";
   }
+
 
   return (
     <>
@@ -60,8 +95,8 @@ const Login = () => {
       </div>
       <div className="container">
         <div className="row">
-          <div className="box">
-            <div className="box-body">
+          <div className="boxn">
+            <div className="boxn-body">
               <div className="row">
                 <div style={{ marginLeft: "50px", marginTop: "50px" }}>
                   <h2>WELCOME TO </h2>
@@ -92,8 +127,8 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="box" style={{ marginLeft: "10px" }}>
-            <div className="box-body">
+          <div className="boxn" style={{ marginLeft: "5px" }}>
+            <div className="boxn-body">
               <div style={{ marginLeft: "150px", marginTop: "20px" }}>
                 <h1
                   style={{
@@ -106,7 +141,7 @@ const Login = () => {
                 </h1>
               </div>
               <div className="card-body">
-                <form onSubmit={LoginSubmit}>
+                <form onSubmit={submitLogin}>
                   <div style={{ marginTop: "50px" }}>
                     <div className="field">
                       <input

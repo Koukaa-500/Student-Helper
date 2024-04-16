@@ -1,32 +1,52 @@
-import React, { Component } from "react";
-import ".//signup.css";
+import React, { Component,useState,useEffect } from "react";
+import "../global.css"
 import logo from "../../assets/logo.png";
 import image from "../../assets/image.png";
+import axios from 'axios';
 //import { Link } from "react-router-dom";
 //this function here will handle the Log in button in case you have an account and you are in the sign page 
 // in the hide and show logic i just used ! to swipe between the divs  that contain the information of part 1 sign up and part 2
 
-class SignUp extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      showDiv: false // Initially hide the div
-    };
+const client = axios.create({
+  baseURL: "http://127.0.0.1:8000"
+});
+const SignUp = () => {
+  const [showDiv, setShowDiv] = useState(false);
+
+  const toggleDiv = () => {
+    setShowDiv(!showDiv);
+  };
+  const [currentUser, setCurrentUser] = useState();
+  const [registrationToggle, setRegistrationToggle] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [first_name, setfirst_name] = useState('');
+  const [last_name, setlast_name] = useState('');
+  const [sector, setSector] = useState('');
+  const [year, setYear] = useState('');
+
+  function submitRegistration(e) {
+    e.preventDefault();
+   
+    
+    client.post("/api/register", {
+      email:email,
+      password:password,
+      first_name:first_name,
+      last_name:last_name,
+      year:year,
+      sector:sector
+    }).then(function(res){
+      window.location.href = "/login";
+    })
   }
 
-  toggleDiv = () => {
-    // Toggle the state to show/hide the div
-    this.setState((prevState) => ({
-     showDiv: !prevState.showDiv
-    }));
-  };
-  render() {
-    const { email, password, step } = this.state;
+  
     return (
       <>
         
-        {!this.state.showDiv && (
+        {!showDiv && (
           <>
             <div className="container">
               <div className="row">
@@ -48,8 +68,8 @@ class SignUp extends Component {
             </div>
             <div className="container">
               <div className="row">
-                <div className="box">
-                  <div className="box-body">
+                <div className="boxn">
+                  <div className="boxn-body">
                     <div className="row">
                       <div style={{ marginLeft: "50px", marginTop: "50px" }}>
                         <h2>WELCOME TO </h2>
@@ -80,8 +100,8 @@ class SignUp extends Component {
                   </div>
                 </div>
 
-                <div className="box" style={{ marginLeft: "5px" }}>
-                  <div className="box-body">
+                <div className="boxn" style={{ marginLeft: "5px" }}>
+                  <div className="boxn-body">
                     <div style={{ marginLeft: "150px", marginTop: "20px" }}>
                       <h1
                         style={{
@@ -94,7 +114,7 @@ class SignUp extends Component {
                       </h1>
                     </div>
                     <div className="card-body">
-                      <form>
+                      <form onSubmit={submitRegistration}>
                         <div style={{ marginTop: "50px" }}>
                           <div className="field">
                             <input
@@ -102,6 +122,8 @@ class SignUp extends Component {
                               className="form-control"
                               placeholder="Email Address"
                               aria-label="Email Address"
+                              value={email} 
+                              onChange={e => setEmail(e.target.value)}
                               required
                               style={{
                                 width: "70%", // Make all text fields the same width
@@ -120,6 +142,7 @@ class SignUp extends Component {
                               className="form-control"
                               placeholder="Password"
                               aria-label="Password"
+                              value={password} onChange={e => setPassword(e.target.value)}
                               required
                               style={{
                                 width: "70%", // Make all text fields the same width
@@ -132,12 +155,13 @@ class SignUp extends Component {
                               }}
                             />
                           </div>
-                          <div className="field">
+                          {/* <div className="field">
                             <input
                               type="password"
                               className="form-control"
                               placeholder="Repeat Password"
                               aria-label="Repeat Password"
+                              value={password} onChange={e => setPassword(e.target.value)}
                               required
                               style={{
                                 width: "70%", // Make all text fields the same width
@@ -149,7 +173,7 @@ class SignUp extends Component {
                                 marginTop: 10,
                               }}
                             />
-                          </div>
+                          </div> */}
 
                           <br />
                           <div style={{ marginLeft: "150px" }}>
@@ -163,7 +187,7 @@ class SignUp extends Component {
                                 borderRadius: 60,
                                 border: "3px black solid",
                               }}
-                              onClick={this.toggleDiv}
+                              onClick={toggleDiv}
                               onMouseEnter={(e) => {
                                 e.target.style.backgroundColor = "#5B3E08";
                               }} /* Change background color on hover */
@@ -198,7 +222,7 @@ class SignUp extends Component {
           </>
         )}
 
-        {this.state.showDiv && (
+        {showDiv && (
           <>
             <div className="container">
               <div className="row">
@@ -220,8 +244,8 @@ class SignUp extends Component {
             </div>
             <div className="container">
               <div className="row">
-                <div className="box">
-                  <div className="box-body">
+                <div className="boxn">
+                  <div className="boxn-body">
                     <div className="row">
                       <div style={{ marginLeft: "50px", marginTop: "50px" }}>
                         <h2>WELCOME TO </h2>
@@ -252,8 +276,8 @@ class SignUp extends Component {
                   </div>
                 </div>
 
-                <div className="box" style={{ marginLeft: "10px" }}>
-                  <div className="box-body">
+                <div className="boxn" style={{ marginLeft: "10px" }}>
+                  <div className="boxn-body">
                     <div style={{ marginLeft: "100px", marginTop: "20px" }}>
                       <h1
                         style={{
@@ -266,7 +290,7 @@ class SignUp extends Component {
                       </h1>
                     </div>
                     <div className="card-body">
-                    <form>
+                    <form onSubmit={submitRegistration}>
                   <div style={{ marginTop: "50px" }}>
                     <div className="row">
                       <div className="col">
@@ -276,6 +300,7 @@ class SignUp extends Component {
                             className="form-control"
                             placeholder="First Name"
                             aria-label="First Name"
+                            value={first_name} onChange={e => setfirst_name(e.target.value)}
                             required
                             style={{
                               height: 50,
@@ -293,6 +318,7 @@ class SignUp extends Component {
                             className="form-control"
                             placeholder="Last Name"
                             aria-label="Last Name"
+                            value={last_name} onChange={e => setlast_name(e.target.value)}
                             required
                             style={{
                               height: 50,
@@ -306,7 +332,7 @@ class SignUp extends Component {
                     </div>
                     <br></br>
                     <div className="row">
-                      <div className="col">
+                      {/* <div className="col">
                         <div className="field">
                           <input
                             type="text"
@@ -322,8 +348,8 @@ class SignUp extends Component {
                             }}
                           />
                         </div>
-                      </div>
-                      <div className="col">
+                      </div> */}
+                      {/* <div className="col">
                         <div className="field">
                           <input
                             type="password"
@@ -339,13 +365,15 @@ class SignUp extends Component {
                             }}
                           />
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                     <br></br>
                     <div className="row">
                     <div className="col">
                         <div className="field">
                           <select
+                          value={sector}
+                          onChange={e => setSector(e.target.value)}
                             className="form-select"
                             aria-label="Default select example"
                             style={{
@@ -355,7 +383,7 @@ class SignUp extends Component {
                               borderTop: "1px black solid",
                             }}
                           >
-                            <option value="sector">Sector</option>
+                            
                             <option value="it">Software Engineering</option>
                             <option value="elec">Electrical Engineering</option>
                             <option value="mec">Mecanical Engineering</option>
@@ -370,6 +398,7 @@ class SignUp extends Component {
                           <select
                             className="form-select"
                             aria-label="Default select example"
+                            value={year} onChange={e => setYear(e.target.value)}
                             style={{
                               height: 50,
                               background: "#CDC5B5",
@@ -396,7 +425,7 @@ class SignUp extends Component {
                           background: "#E3D4B7",
                           borderRadius: 60,
                           border: "3px black solid",
-                          href:"/login"
+                          //href:"/login"
                         }}
                         onMouseEnter={(e) => {
                           e.target.style.backgroundColor = "#5B3E08";
@@ -429,6 +458,6 @@ class SignUp extends Component {
       </>
     );
   }
-}
+
 
 export default SignUp;

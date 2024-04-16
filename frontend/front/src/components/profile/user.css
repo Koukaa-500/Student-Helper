@@ -57,7 +57,7 @@
     margin-left:15px
 }
 .line a:hover {
-    background-color: #111;
+  text-decoration: underline;
   }
 
 

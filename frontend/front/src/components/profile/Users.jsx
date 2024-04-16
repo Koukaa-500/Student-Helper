@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component,useState } from "react";
 import ".//user.css";
 import minilogo from "../../assets/minilogo.png";
 import notes from "../../assets/notesicon.png";
@@ -8,83 +8,65 @@ import logout from "../../assets/logout.png";
 import light from "../../assets/light.png";
 import saturn from "../../assets/saturn.png";
 import nabil from "../../assets/nabil.jpg";
+import axios from 'axios';
+const client = axios.create({
+  baseURL: "http://127.0.0.1:8000"
+});
 
-class Users extends Component {
-  //     const [selectedButton, setSelectedButton] = useState('');
-  //   const handleButtonClick = (buttonName) => {
-  //     setSelectedButton(buttonName);
-  //   };
-  constructor(props) {
-    super(props);
-    this.state = {
-      image: null,
-    };
-    this.handleImageChange = this.handleImageChange.bind(this);
-    this.state = {
-      info: "Initial information",
-      editableInfo: "",
-      isEditing: false,
-    };
-    this.state = {
-      isDetailsUnderlined: false,
-      isEditProfileUnderlined: false,
-    };
-    this.state = {
-      showTooltip: false,
-    };
-  }
-  handleDetailsClick = () => {
-    this.setState((prevState) => ({
-      isDetailsUnderlined: !prevState.isDetailsUnderlined,
-      isEditProfileUnderlined: false,  // Set to false to remove underline from Edit Profile
-    }));
-  };
-  
-  handleEditProfileClick = () => {
-    this.setState((prevState) => ({
-      isEditProfileUnderlined: !prevState.isEditProfileUnderlined,
-      isDetailsUnderlined: false,  // Set to false to remove underline from My Details
-    }));
-  };
-  
+const Users = () => {
+  const [image, setImage] = useState(null);
+  const [info, setInfo] = useState("Initial information");
+  const [editableInfo, setEditableInfo] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  const [isDetailsUnderlined, setIsDetailsUnderlined] = useState(false);
+  const [isEditProfileUnderlined, setIsEditProfileUnderlined] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
 
-  handleImageChange(e) {
+  const handleDetailsClick = () => {
+    setIsDetailsUnderlined(!isDetailsUnderlined);
+    setIsEditProfileUnderlined(false);
+  };
+
+  const handleEditProfileClick = () => {
+    setIsEditProfileUnderlined(!isEditProfileUnderlined);
+    setIsDetailsUnderlined(false);
+  };
+
+  const handleImageChange = (e) => {
     const file = e.target.files[0];
-    // You can perform validation on the file here if needed
-    this.setState({ image: file });
-  }
-
-  handleEdit = () => {
-    this.setState({
-      editableInfo: this.state.info,
-      isEditing: true,
-    });
+    setImage(file);
   };
 
-  handleInputChange = (event) => {
-    this.setState({
-      editableInfo: event.target.value,
-    });
+  const handleEdit = () => {
+    setEditableInfo(info);
+    setIsEditing(true);
   };
 
-  handleConfirm = () => {
-    this.setState((prevState) => ({
-      info: prevState.editableInfo,
-      isEditing: false,
-    }));
-  };
-  handleMouseEnter = () => {
-    this.setState({ showTooltip: true });
+  const handleInputChange = (event) => {
+    setEditableInfo(event.target.value);
   };
 
-  handleMouseLeave = () => {
-    this.setState({ showTooltip: false });
+  const handleConfirm = () => {
+    setInfo(editableInfo);
+    setIsEditing(false);
   };
 
-  render() {
-    const { info, editableInfo, isEditing } = this.state;
-    const { isDetailsUnderlined, isEditProfileUnderlined } = this.state;
-    const { showTooltip } = this.state;
+  const handleMouseEnter = () => {
+    setShowTooltip(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShowTooltip(false);
+  };
+
+  function submitLogout (e) {
+    e.preventDefault();
+    client.post(
+      "/api/logout",
+      { withCredentials: true }
+    );
+  };
+
     return (
       <>
         <div className="container">
@@ -132,7 +114,8 @@ class Users extends Component {
                     }}
                     src={logout}
                   ></img>
-                  <a
+                  <form onSubmit={submitLogout}>
+                  <button
                     href=""
                     style={{
                       color: "white",
@@ -140,9 +123,12 @@ class Users extends Component {
                       marginTop: "30px",
                       textDecoration: "none",
                     }}
+                    type="submit"
                   >
                     𝗟𝗼𝗴 𝗢𝘂𝘁
-                  </a>
+                  </button>
+                  </form>
+                  
                 </div>
               </div>
             </div>
@@ -211,8 +197,8 @@ class Users extends Component {
                     <label htmlFor="imageUpload" style={{ cursor: "pointer" }}>
                       <img
                         src={
-                          this.props.image
-                            ? URL.createObjectURL(this.props.image)
+                          image
+                            ? URL.createObjectURL(image)
                             : nabil
                         }
                         alt="image profile"
@@ -222,8 +208,8 @@ class Users extends Component {
                           borderRadius: "60px",
                           border: "7px solid #4D2C5E",
                         }}
-                        onMouseEnter={this.handleMouseEnter}
-                        onMouseLeave={this.handleMouseLeave}
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
                       />
                     </label>
                     {showTooltip && (
@@ -239,7 +225,7 @@ class Users extends Component {
                     type="file"
                     id="imageUpload"
                     style={{ display: "none" }}
-                    onChange={this.handleImageChange}
+                    onChange={handleImageChange}
                   />
                 </div>
 
@@ -250,7 +236,7 @@ class Users extends Component {
             ? "underlineButton underlined"
             : "underlineButton"
         }
-        onClick={this.handleDetailsClick}
+        onClick={handleDetailsClick}
       >
         𝙼𝚢 𝙳𝚎𝚝𝚊𝚒𝚕𝚜
       </button>
@@ -261,7 +247,7 @@ class Users extends Component {
             ? "underlineButton underlined"
             : "underlineButton"
         }
-        onClick={this.handleEditProfileClick}
+        onClick={handleEditProfileClick}
       >
         𝙴𝚍𝚒𝚝 𝙿𝚛𝚘𝚏𝚒𝚕𝚎
       </button>
@@ -360,6 +346,6 @@ class Users extends Component {
       </>
     );
   }
-}
+
 
 export default Users;

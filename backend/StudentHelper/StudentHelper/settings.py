@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'StudentHelper.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',  # Use 'mongodb' as the database engine
-        'NAME': 'Student-HelperDB',  # Specify your MongoDB database name
+        'NAME': BASE_DIR/'db.sqlite3',  # Specify your MongoDB database name
     }
 }
 
