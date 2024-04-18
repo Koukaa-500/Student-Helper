@@ -1,5 +1,5 @@
 import React, { Component,useState } from "react";
-import ".//user.css";
+import "../global.css"
 import minilogo from "../../assets/minilogo.png";
 import notes from "../../assets/notesicon.png";
 import settingslogo from "../../assets/settings-48.png";
@@ -9,6 +9,9 @@ import light from "../../assets/light.png";
 import saturn from "../../assets/saturn.png";
 import nabil from "../../assets/nabil.jpg";
 import axios from 'axios';
+import Logout from '../authentication/Logout.jsx';
+import { handleLogout } from '../authentication/authService.js';
+
 const client = axios.create({
   baseURL: "http://127.0.0.1:8000"
 });
@@ -66,9 +69,11 @@ const Users = () => {
       { withCredentials: true }
     );
   };
+  
 
     return (
       <>
+      <Logout>
         <div className="container">
           <div className="row">
             <div className="col-md-3">
@@ -114,8 +119,9 @@ const Users = () => {
                     }}
                     src={logout}
                   ></img>
-                  <form onSubmit={submitLogout}>
+                  
                   <button
+                  onClick={handleLogout}
                     href=""
                     style={{
                       color: "white",
@@ -127,7 +133,7 @@ const Users = () => {
                   >
                     𝗟𝗼𝗴 𝗢𝘂𝘁
                   </button>
-                  </form>
+                  
                   
                 </div>
               </div>
@@ -343,6 +349,7 @@ const Users = () => {
             </div>
           </div>
         </div>
+        </Logout>
       </>
     );
   }
