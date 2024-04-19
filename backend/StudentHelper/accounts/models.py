@@ -24,7 +24,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     sector = models.CharField(max_length=255, blank=True)  
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-    
+    profile_image = models.ImageField(upload_to='profile_images/', blank=True, null=True)
     objects = CustomUserManager()
     
     USERNAME_FIELD = 'email'

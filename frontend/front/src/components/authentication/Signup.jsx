@@ -237,6 +237,7 @@ const SignUp = () => {
     axios.post('http://127.0.0.1:8000/accounts/signup', formData)
   .then(response => {
     console.log(response.data);
+    window.location.href = "/login";
     // Handle successful signup
   })
   .catch(error => {
@@ -248,24 +249,24 @@ const SignUp = () => {
 
   return (
     <>
-      <div className="container">
-        <div className="row">
-          
-          <div className="col  justify-items-center">
+      
+      <div className="rectangle">
+            
+            
             <img
               style={{
                 width: "150",
                 height: "150",
                 borderRadius: "13",
-                marginLeft: "44%",
+                marginLeft:"16%"
               }}
               src={logo}
               alt=""
             />
-          </div>
+          
           
         </div>
-      </div>
+      
       <div className="container" style={{marginLeft:"5%"}}>
         <div className="row">
           <div className="boxn">

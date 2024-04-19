@@ -4,6 +4,7 @@ import loginImage from "../../assets/loginImage.png";
 import axios from 'axios'; // Import Axios for making HTTP requests
 import "../global.css"
 import { setAuthToken } from '../authentication/authService.js';
+import { useNavigate } from 'react-router-dom';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -24,6 +25,11 @@ const Login = () => {
     } catch (err) {
       setError(err.response.data.error);
     }
+  };
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate('/login');
   };
 
   function submitLogin(e) {
@@ -51,71 +57,30 @@ function handleError(error) {
       setError("Invalid email or password");
   } else {
       console.error("Login error:", error);
-      setError("An error occurred while logging in. Please try again.");
+      setError("Invalid email or password.");
   }
 }
-
-// function submitLogin(e) {
-//   e.preventDefault();
-
-//   // Validate email and password
-//   if (!email || !password) {
-//     setError('Email and password are required.');
-//     return;
-//   }
-
-//   client.post(
-//     "/api/login",
-//     {
-//       email: email,
-//       password: password
-//     }
-//   )
-//   .then(function(res) {
-//     setCurrentUser(true);
-//     // Redirect user or perform other actions upon successful login
-//     window.location.href = "/user";
-//   })
-//   .catch(function(error) {
-//     // Handle error
-//     if (error.response) {
-//       setError(error.response.data.detail || 'An error occurred while logging in.');
-//     } else {
-//       setError("An error occurred while logging in.");
-//     }
-//   });
-// };
-
-  function LoginSubmit(e) {
-    // Prevent the default form submission behavior
-    e.preventDefault();
-    
-    // Redirect the user to the "/user" page
-    window.location.href = "/user";
-  }
-
-
   return (
     <>
       <div className="no-scroll">
-        <div className="container">
-          <div className="row">
-            <div className="col"></div>
-            <div className="col  justify-content-center">
+        
+          <div className="rectangle">
+            
+            
               <img
                 style={{
                   width: "150",
                   height: "150",
                   borderRadius: "13",
-                  marginLeft: "50px",
+                  marginLeft:"5%"
                 }}
                 src={logo}
                 alt=""
               />
-            </div>
-            <div className="col"></div>
+            
+            
           </div>
-        </div>
+        
         <div className="container">
           <div className="row">
             <div className="boxn">
@@ -209,8 +174,9 @@ function handleError(error) {
 
                       <br />
                       <div style={{ marginLeft: "150px" }}>
+                      
                         <button
-                          href="/user"
+                          
                           className="button"
                           type="submit"
                           style={{
@@ -226,15 +192,17 @@ function handleError(error) {
                           onMouseLeave={(e) => {
                             e.target.style.backgroundColor = "#E3D4B7";
                           }} /* Change back to default color when not hovered */
+                          onClick={handleLoginClick}
                         >
                           LOG IN
                         </button>
+                        
                       </div>
                     </div>
                   </form>
 
                   {error && (
-                    <div className="error-modal">
+                    <div className="error-modal" style={{marginLeft:"160px",marginTop:"10px" , color:"red"}}>
                       <p>{error}</p>
                     </div>
                   )}

@@ -1,6 +1,11 @@
 import React from "react";
-
+import { getAuthToken, removeAuthToken } from "../authentication/authService";
 const Home = () => {
+  const handleLogout = () => {
+    // Remove token and redirect to login
+    removeAuthToken();
+    window.location.href = "/login";
+  };
   return (
     <div
       className="bigBody"
@@ -108,7 +113,7 @@ const Home = () => {
           type="button"
           className="btn btn-primary sign-in-button"
           style={{ marginLeft: "20px" }}
-          href="/signup"
+          onClick={handleLogout}
         >
             
           Sign In

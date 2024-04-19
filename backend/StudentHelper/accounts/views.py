@@ -10,6 +10,7 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from .serializers import UserSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.core.files.base import ContentFile
 # Create your views here.
 
 from django.contrib.auth import authenticate
@@ -54,7 +55,8 @@ def signup(request):
         # Check if a user with the given email already exists
         if CustomUser.objects.filter(email=email).exists():
             return Response({"error": "Email already exists"}, status=status.HTTP_400_BAD_REQUEST)
-        
+        if '@ensit.u-tunis.com' not in email:
+            return Response({"error":"Please type a valid ensit email"})
         # Create the user
         user = CustomUser.objects.create(email=email, first_name=first_name,last_name=last_name,sector=sector,year=year)
         
@@ -96,3 +98,68 @@ def logout(request):
         return Response({"success": "Successfully logged out."}, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    
+
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def user_data_view(request):
+    user = request.user
+
+    # Create a default response
+    response_data = {
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'email': user.email,
+        'year': user.year,
+        'sector': user.sector,
+        'profile_image': None  # Default value for profile_image
+    }
+
+    # Check if profile image exists
+    if user.profile_image:
+        response_data['profile_image'] = user.profile_image.url
+
+    return Response(response_data, status=status.HTTP_200_OK)
+
+
+
+
+@api_view(['PUT'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def update_profile_image(request):
+    user = request.user
+
+    # Check if image data is in request
+    if 'profile_image' not in request.data:
+        return Response({'error': 'No image data provided'}, status=status.HTTP_400_BAD_REQUEST)
+
+    profile_image_data = request.data['profile_image']
+
+    # Create a ContentFile object from the image data
+    image_name = f"{user.email}_profile_image.jpg"  # You can change the extension based on the image type
+    user.profile_image.save(image_name, ContentFile(profile_image_data), save=True)
+
+    return Response({'message': 'Profile image updated successfully'}, status=status.HTTP_200_OK)
+
+
+
+from django.http import HttpResponseNotFound, FileResponse
+from django.conf import settings
+import os
+
+def get_profile_image(request, filename):
+    # Define the path to the media directory
+    media_root = settings.MEDIA_ROOT
+    
+    # Construct the full path to the image
+    image_path = os.path.join(media_root, 'profile_images', filename)
+    
+    # Check if the file exists
+    if os.path.exists(image_path):
+        # Serve the image using FileResponse
+        return FileResponse(open(image_path, 'rb'), content_type='image/jpeg')
+    else:
+        # Return a 404 response if the file does not exist
+        return HttpResponseNotFound("Image not found")
