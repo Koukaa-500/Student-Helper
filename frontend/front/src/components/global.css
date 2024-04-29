@@ -459,3 +459,19 @@ body {
   .no-scroll{
     overflow: none;
   }
+
+  /* cources */
+
+  .carta{
+    margin-top: 50px;
+    margin-left:50px ;
+    width: 150px;
+    height: 150px;
+    border-color: black;
+    border-radius:7px;
+    border-top: 1px solid #333;
+    border-right: 1px solid #333;
+    border-bottom: 1px solid #333;
+    border-left: 1px solid #333;
+    
+  }

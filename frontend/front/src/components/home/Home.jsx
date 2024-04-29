@@ -1,5 +1,6 @@
 import React from "react";
 import { getAuthToken, removeAuthToken } from "../authentication/authService";
+import { Link } from 'react-router-dom';
 const Home = () => {
   const handleLogout = () => {
     // Remove token and redirect to login
@@ -7,10 +8,7 @@ const Home = () => {
     window.location.href = "/login";
   };
   return (
-    <div
-      className="bigBody"
-      
-    >
+    <div className="bigBody">
       {/* <div
         className="background-image"
         style={{
@@ -97,27 +95,27 @@ const Home = () => {
 
       {/* Barre de menu transparente */}
       <div className="menu-bar" style={{ marginLeft: "20px", padding: "50px" }}>
-        <a href="/lien-1" className="menu-item">
+        <Link href="/" className="menu-item">
           Home
-        </a>
-        <a href="/lien-2" className="menu-item">
+        </Link>
+        <Link href="/AboutUs" className="menu-item">
           About us
-        </a>
-        <a href="/lien-3" className="menu-item">
+        </Link>
+        <Link to="/OurServices" className="menu-item">
           Our service
-        </a>
-        <a href="/lien-4" className="menu-item">
+        </Link>
+
+        <Link href="/ContactUs" className="menu-item">
           Contact us
-        </a>
-        <a
+        </Link>
+        <Link
           type="button"
           className="btn btn-primary sign-in-button"
           style={{ marginLeft: "20px" }}
           onClick={handleLogout}
         >
-            
           Sign In
-        </a>
+        </Link>
       </div>
 
       {/* Nouveau bloc ajouté */}

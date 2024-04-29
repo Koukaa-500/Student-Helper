@@ -163,3 +163,17 @@ def get_profile_image(request, filename):
     else:
         # Return a 404 response if the file does not exist
         return HttpResponseNotFound("Image not found")
+
+@api_view(['PUT'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def edit_profile(request):
+    user = request.user
+
+    # Validate and update user data
+    serializer = UserSerializer(user, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

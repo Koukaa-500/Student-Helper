@@ -12,6 +12,7 @@ import axios from "axios";
 import { Link } from 'react-router-dom';
 import { handleLogout } from "../authentication/authService.js";
 import { getAuthToken, removeAuthToken } from "../authentication/authService";
+import { Toaster } from "sonner";
 const client = axios.create({
   baseURL: "http://127.0.0.1:8000",
 });
@@ -179,6 +180,7 @@ const Users = () => {
 
   return (
     <>
+  
       <div className="container">
         <div className="row">
           <div className="col-md-3">
@@ -263,9 +265,11 @@ const Users = () => {
                         </a>
                       </li>
                       <li className="nav-item">
-                        <a className="nav-link " aria-current="page" href="#">
+                        <Link to ="/courses" style={{textDecoration:"none"}}>
+                        <a className="nav-link " aria-current="page" >
                           Courses
                         </a>
+                        </Link>
                       </li>
                       <li className="nav-item">
                         <a className="nav-link " aria-current="page" href="#">
@@ -322,7 +326,7 @@ const Users = () => {
                       onClick={() => setShowConfirmationModal(false)}
                     />
                   </label>
-///nada said try to use a  static url for the image(absolute)
+
                   {showConfirmationModal && (
                     <div
                       className="confirmation-modal"
@@ -424,7 +428,7 @@ const Users = () => {
                     <input
                       id="password"
                       type="text"
-                      value={userData.password}
+                      value="****************"
                       readOnly
                       className="inputField"
                     />

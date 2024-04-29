@@ -3,7 +3,7 @@ import "../global.css";
 import logo from "../../assets/logo.png";
 import image from "../../assets/image.png";
 import axios from "axios";
-
+import {Link} from "react-router-dom"
 const client = axios.create({
   baseURL: "http://127.0.0.1:8000",
 });
@@ -170,12 +170,27 @@ const StepTwo = ({ formData, handleChange, handlePrevStep, handleSubmit }) => (
         </div>
       </div>
       <br />
-      <div style={{ marginLeft: "150px" }}>
+      <div style={{ marginLeft: "0px" }}>
+        <button
+          className="button"
+          type="submit"
+          style={{
+            marginLeft:"2Linkpx",
+            width: 207,
+            height: 50,
+            background: "#E3D4B7",
+            borderRadius: 60,
+            border: "3px black solid",
+          }}
+        >
+          Confirm
+        </button>
         <button
           className="button"
           type="button"
           onClick={handlePrevStep}
           style={{
+            marginLeft:"10px",
             width: 207,
             height: 50,
             background: "#E3D4B7",
@@ -185,19 +200,6 @@ const StepTwo = ({ formData, handleChange, handlePrevStep, handleSubmit }) => (
           }}
         >
           Back
-        </button>
-        <button
-          className="button"
-          type="submit"
-          style={{
-            width: 207,
-            height: 50,
-            background: "#E3D4B7",
-            borderRadius: 60,
-            border: "3px black solid",
-          }}
-        >
-          Confirm
         </button>
       </div>
     </div>
@@ -337,9 +339,9 @@ const SignUp = () => {
                 >
                   <label htmlFor="inputEmail4" className="form-label">
                     Already have an account?{" "}
-                    <a href="/login" style={{ color: "black" }}>
+                    <Link to="/login" style={{ color: "black" }}>
                       Log in
-                    </a>
+                    </Link>
                   </label>
                 </div>
               </div>

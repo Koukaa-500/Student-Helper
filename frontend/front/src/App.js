@@ -5,7 +5,9 @@ import Users from "./components/profile/Users.jsx";
 import SignUp from "./components/authentication/Signup.jsx";
 import Login from "./components/authentication/Login.jsx";
 import Home from "./components/home/Home.jsx";
-
+import Chatbot from "./components/profile/Chatbot.jsx";
+import OurServices from "./components/home/OurServices.jsx"
+import Courses from "./components/home/Courses.jsx";
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -34,6 +36,9 @@ function App() {
             element={isAuthenticated ? <Users /> : <Navigate to="/login" />} 
           />
           <Route exact path="/" element={<Home />} />
+          <Route path="chatbot" element={<Chatbot/>}/>
+          <Route path="ourservices" element ={<OurServices/>}/>
+          <Route path="courses" element = {<Courses/>}/>
         </Routes>
       </Router>
     </div>

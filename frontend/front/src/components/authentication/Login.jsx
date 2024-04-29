@@ -4,7 +4,8 @@ import loginImage from "../../assets/loginImage.png";
 import axios from 'axios'; // Import Axios for making HTTP requests
 import "../global.css"
 import { setAuthToken } from '../authentication/authService.js';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,Link} from 'react-router-dom';
+import { Toaster, toast } from 'sonner';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,19 +14,7 @@ const Login = () => {
   const client = axios.create({
     baseURL:"http://127.0.0.1:8000"
   });
-  const submitLoagin = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:8000/accounts/login', {
-        email: email,
-        password: password
-      });
-      console.log(response.data);
-      // Redirect user or perform other actions upon successful login
-    } catch (err) {
-      setError(err.response.data.error);
-    }
-  };
+ 
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
@@ -35,7 +24,7 @@ const Login = () => {
   function submitLogin(e) {
     e.preventDefault();
 
-    client.post("/accounts/login", { email: email, password: password })
+     client.post("/accounts/login", { email: email, password: password })
         .then(function(res) {
             const { token, refreshToken } = res.data;
 
@@ -43,25 +32,29 @@ const Login = () => {
             setAuthToken(token, refreshToken);
 
             // Redirect to the user page
-            window.location.href = "/user";
-
+            
+           toast.success('Login successful!', {
+              duration: 5000,
+               // Duration in milliseconds (3 seconds)
+            });
+            setTimeout(() => {
+              // Redirect to the user page
+              window.location.href = "/user";
+            }, 1000);
             console.log(res.data);
         })
         .catch(function(error) {
-            handleError(error);
+          toast.error('User not registered. Please check your email.', {
+            duration: 5000, // Duration in milliseconds (5 seconds)
+          });
         });
 }
 
-function handleError(error) {
-  if (error.response && error.response.data && error.response.data.error === "User not registered") {
-      setError("Invalid email or password");
-  } else {
-      console.error("Login error:", error);
-      setError("Invalid email or password.");
-  }
-}
+
+
   return (
     <>
+    <Toaster position="top-center" richColors  />
       <div className="no-scroll">
         
           <div className="rectangle">
@@ -201,11 +194,7 @@ function handleError(error) {
                     </div>
                   </form>
 
-                  {error && (
-                    <div className="error-modal" style={{marginLeft:"160px",marginTop:"10px" , color:"red"}}>
-                      <p>{error}</p>
-                    </div>
-                  )}
+                  
                   <div
                     style={{
                       marginLeft: "140px",
@@ -215,9 +204,9 @@ function handleError(error) {
                   >
                     <label htmlFor="inputEmail4" className="form-label">
                       Don't have an account?{" "}
-                      <a href="/signup" style={{ color: "black" }}>
+                      <Link to="/signup" style={{ color: "black" }}>
                         SIGN UP
-                      </a>
+                      </Link>
                     </label>
                   </div>
                 </div>
