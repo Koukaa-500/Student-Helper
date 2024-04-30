@@ -14,7 +14,9 @@ body {
     background: linear-gradient(180deg, #f2ebdb 0%, #e7d5b2 63%, #8c887f 100%);
     border-radius: 14;
   }
- 
+ html{
+  min-height: 700px;
+ }
   .boxn{
       
       width: 500px;
@@ -42,6 +44,37 @@ body {
   }
 
   
+
+
+  /* Fade-in and fade-out animations */
+@keyframes fadeInn {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+      opacity: 1;
+  }
+  to {
+      opacity: 0;
+  }
+}
+
+/* Page transition classes */
+.page-enter {
+  animation: fadeIn 0.3s ease-in-out;
+  opacity: 0;
+}
+
+.page-exit {
+  animation: fadeOut 0.3s ease-in-out;
+  opacity: 1;
+}
 
 
 
@@ -221,3 +254,227 @@ body {
   
   
   
+
+
+  .sidebar{
+    width : 300px;
+    height : 600px;
+    border-radius: 7px;
+    border-top: 1px solid #333;
+    border-right: 1px solid #333;
+    border-bottom: 1px solid #333;
+    border-left: 1px solid #333;
+    background-color: #4D2C5E;
+    margin-top: 25px;
+}
+
+
+.topbox{
+    height: 80px;
+    display:flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.middilebox{
+    height : 300px;
+    
+    margin-top: 10px;
+    
+    
+}
+.middilebox a{
+    
+    margin-top:20px;
+    font-size: 20px;
+    font: weight 10px ;
+      
+}
+.line{
+    margin-top: 30px;
+
+}
+
+.bottombox{
+    height:80px;
+    
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    
+  }
+  
+  .inputField {
+    border: none;
+    background-color: transparent;
+  
+    /* Additional styling if needed */
+  }
+  .inputer{
+    font-weight: bold;
+  }
+  
+
+.line a {
+    color: white;
+    margin-left: 20px;
+    margin-top: 32px;
+    text-decoration: none;
+}
+
+.line img{
+    width: 30px;
+    height: 30px;
+    color: white;
+    margin-left:15px
+}
+.line a:hover {
+  text-decoration: underline;
+  }
+
+
+.profile{
+    margin-left: 10px;
+    width : 800px;
+    height : 600px;
+    border-radius: 7px;
+    border-top: 1px solid #333;
+    border-right: 1px solid #333;
+    border-bottom: 1px solid #333;
+    background-color: #FDF8EE;
+    margin-top: 25px;
+
+}
+
+.navbar-nav .nav-link.active {
+    text-decoration: underline;
+}
+
+.profileData{
+    width:40rem;
+    height:10rem;
+    margin-left: 15px;
+}
+
+.profileData button{
+    background: none;
+    border: none;
+    color: #4D2C5E;/* Example color */
+    cursor: pointer;
+  
+    font-size: 1.7rem;
+    font-weight: bold;
+    
+    
+}
+
+.underlineButton {
+    text-decoration: none;
+    background: none;
+    border: none;
+    color: #4D2C5E;/* Example color */
+    cursor: pointer;
+    font-size: 1.7rem;
+    font-weight: bold;
+  }
+  .underlineButton.underlined {
+    text-decoration: underline;
+  }
+
+  .form {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .profileData input{
+    margin-right: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    border:none;
+  }
+  
+  label {
+    margin-bottom: 5px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #575252;
+  }
+
+ 
+
+
+  .Courses button{
+    border-radius: 30px;
+    background-color: #FF7426;
+    padding: 10px 40px;
+    color: white;
+    border: none;
+    margin-right:20px;
+    margin-top: 10px;
+  }
+
+  .Courses a{
+    color: #4D2C5E;
+    font-weight: bold;
+    font-size: 25px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+  }
+
+  .image{
+    width: 10rem;
+    height:10rem;
+    margin-left: 40rem;
+    margin-top: 0;
+  }
+
+  .bottom{
+    width: 40rem;
+    height:10rem;
+  }
+
+.rectangle{
+  width:1000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+  
+  
+  .confirmation-modal {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #FDF8EE;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 1);
+    width:20rem;
+    height: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+
+
+  .no-scroll{
+    overflow: none;
+  }
+
+  /* cources */
+
+  .carta{
+    margin-top: 50px;
+    margin-left:50px ;
+    width: 150px;
+    height: 150px;
+    border-color: black;
+    border-radius:7px;
+    border-top: 1px solid #333;
+    border-right: 1px solid #333;
+    border-bottom: 1px solid #333;
+    border-left: 1px solid #333;
+    
+  }

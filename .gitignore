@@ -5,8 +5,13 @@
 /build
 /dist
 
-# Python dependencies
+# Python dependencie
+
 /venv
+/venv
+/myenv
+
+# Python compiled files
 *.pyc
 
 # Django migrations
