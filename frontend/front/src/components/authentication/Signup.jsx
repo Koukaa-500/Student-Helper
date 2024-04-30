@@ -66,7 +66,7 @@ const SignUp = () => {
                 <div className="col"></div>
               </div>
             </div>
-            <div className="container">
+            <div className="center-content">
               <div className="row">
                 <div className="boxn">
                   <div className="boxn-body">
