@@ -265,13 +265,6 @@ const SignUp = () => {
               src={logo}
               alt=""
             />
-<<<<<<< HEAD
-          </div>
-                <div className="col"></div>
-              </div>
-            </div>
-            <div className="center-content">
-=======
           
           
         </div>
@@ -280,7 +273,6 @@ const SignUp = () => {
         <div className="row">
           <div className="boxn">
             <div className="boxn-body">
->>>>>>> 3da1c05181c27bad2eae072bbd0a5a55781fb298
               <div className="row">
                 <div style={{ marginLeft: "50px", marginTop: "50px" }}>
                   <h2>WELCOME TO </h2>
