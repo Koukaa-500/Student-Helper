@@ -7,7 +7,7 @@ import booklogo from "../../assets/booklogo.png";
 import logout from "../../assets/logout.png";
 import light from "../../assets/light.png";
 import saturn from "../../assets/saturn.png";
-import nabil from "../../assets/nabil.jpg";
+import why from "../../assets/why.png";
 import axios from "axios";
 import { Link } from 'react-router-dom';
 import { handleLogout } from "../authentication/authService.js";
@@ -26,6 +26,7 @@ const Users = () => {
   const [isEditProfileUnderlined, setIsEditProfileUnderlined] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [isFormVisible, setIsFormVisible] = useState(false);
   const [userData, setUserData] = useState({
     firstName: "",
     lastName: "",
@@ -109,8 +110,9 @@ const Users = () => {
   const handleEditProfileClick = () => {
     setIsEditProfileUnderlined(!isEditProfileUnderlined);
     setIsDetailsUnderlined(false);
+     // Toggle the visibility of the form
   };
-
+ 
 
 
 
@@ -173,14 +175,28 @@ const Users = () => {
         console.error('Error uploading image:', error);
     }
   };
-  
+  const handleEditProfileSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem("authToken");
+      const response = await axios.put("http://127.0.0.1:8000/accounts/edit-profile", userData, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${token}`,
+        },
+      });
+      setIsEditProfileUnderlined(false);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
+  };
   
   
 
 
   return (
     <>
-  
       <div className="container">
         <div className="row">
           <div className="col-md-3">
@@ -236,6 +252,7 @@ const Users = () => {
                       height: "30px",
                       color: "white",
                       marginLeft: "5px",
+                      marginRight: "10px",
                     }}
                     src={logout}
                     onClick={handleLogout}
@@ -253,10 +270,10 @@ const Users = () => {
                   <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav">
                       <li className="nav-item">
-                        <Link to="/" style={{textDecoration:"none"}}>
-                        <a className="nav-link " aria-current="page">
-                          Home
-                        </a>
+                        <Link to="/" style={{ textDecoration: "none" }}>
+                          <a className="nav-link " aria-current="page">
+                            Home
+                          </a>
                         </Link>
                       </li>
                       <li className="nav-item">
@@ -265,16 +282,18 @@ const Users = () => {
                         </a>
                       </li>
                       <li className="nav-item">
-                        <Link to ="/courses" style={{textDecoration:"none"}}>
-                        <a className="nav-link " aria-current="page" >
-                          Courses
-                        </a>
+                        <Link to="/courses" style={{ textDecoration: "none" }}>
+                          <a className="nav-link " aria-current="page">
+                            Courses
+                          </a>
                         </Link>
                       </li>
                       <li className="nav-item">
-                        <a className="nav-link " aria-current="page" href="#">
-                          ChatBot
-                        </a>
+                      <Link to="/Chatbot" style={{ textDecoration: "none" }}>
+                          <a className="nav-link " aria-current="page">
+                            ChatBot
+                          </a>
+                        </Link>
                       </li>
                       <li className="nav-item">
                         <a className="nav-link" aria-current="page" href="#">
@@ -334,6 +353,8 @@ const Users = () => {
                     >
                       <p>Do you want to change your profile photo?</p>
                       <br></br>
+                      <img src = {why} style={{width : "6rem", height:"6rem"}}></img>
+                      
                     </div>
                   )}
                 </div>
@@ -358,7 +379,7 @@ const Users = () => {
                 }
                 onClick={handleDetailsClick}
               >
-                𝙼𝚢 𝙳𝚎𝚝𝚊𝚒𝚕𝚜
+                My Details
               </button>
               <button
                 style={{ marginLeft: "10px" }}
@@ -369,7 +390,7 @@ const Users = () => {
                 }
                 onClick={handleEditProfileClick}
               >
-                𝙴𝚍𝚒𝚝 𝙿𝚛𝚘𝚏𝚒𝚕𝚎
+                Edit Profile
               </button>
               <div className="profileData">
                 <div className="row">
@@ -382,7 +403,7 @@ const Users = () => {
                       type="text"
                       value={userData.firstName}
                       readOnly
-                      className="inputField"
+                      className="form-control"
                     />
                   </div>
                   <div className="col-md-4">
@@ -394,7 +415,7 @@ const Users = () => {
                       type="text"
                       value={userData.email}
                       readOnly
-                      className="inputField"
+                      className="form-control"
                     />
                   </div>
                   <div className="col-md-4">
@@ -406,7 +427,7 @@ const Users = () => {
                       type="text"
                       value={userData.year}
                       readOnly
-                      className="inputField"
+                      className="form-control"
                     />
                   </div>
                   <div className="col-md-4">
@@ -418,7 +439,7 @@ const Users = () => {
                       type="text"
                       value={userData.lastName}
                       readOnly
-                      className="inputField"
+                      className="form-control"
                     />
                   </div>
                   <div className="col-md-4">
@@ -430,7 +451,7 @@ const Users = () => {
                       type="text"
                       value="****************"
                       readOnly
-                      className="inputField"
+                      className="form-control"
                     />
                   </div>
                   <div className="col-md-4">
@@ -442,11 +463,125 @@ const Users = () => {
                       type="text"
                       value={userData.sector}
                       readOnly
-                      className="inputField"
+                      className="form-control"
                     />
                   </div>
                 </div>
               </div>
+
+              {isEditProfileUnderlined && (
+                <div className="editProfileForm">
+                  <form onSubmit={handleEditProfileSubmit}>
+                    <div className="row">
+                      <div className="col-md-6">
+                        <label htmlFor="editFirstName">First Name</label>
+                        <input
+                          id="editFirstName"
+                          type="text"
+                          value={userData.firstName}
+                          onChange={(e) =>
+                            setUserData({
+                              ...userData,
+                              firstName: e.target.value,
+                            })
+                          }
+                          className="form-control"
+                        />
+                      </div>
+                      <div className="col-md-6">
+                        <label htmlFor="editlastName">Last Name</label>
+                        <input
+                          id="editLastName"
+                          type="text"
+                          value={userData.lastName}
+                          onChange={(e) =>
+                            setUserData({
+                              ...userData,
+                              lastName: e.target.value,
+                            })
+                          }
+                          className="form-control"
+                        />
+                      </div>
+                      <div className="col-md-6">
+                        <label htmlFor="editEmail">Email</label>
+                        <input
+                          id="editEmail"
+                          type="text"
+                          value={userData.email}
+                          onChange={(e) =>
+                            setUserData({ ...userData, email: e.target.value })
+                          }
+                          className="form-control"
+                        />
+                      </div>
+                      <div className="col-md-6">
+                        <label htmlFor="editPassword">Password</label>
+                        <input
+                          id="editPassword"
+                          type="password"
+                          value={userData.password}
+                          onChange={(e) =>
+                            setUserData({
+                              ...userData,
+                              password: e.target.value,
+                            })
+                          }
+                          className="form-control"
+                        />
+                      </div>
+                      <div className="col-md-6">
+                      <label htmlFor="editSector">Year</label>
+                        <select
+                          className="form-select"
+                          aria-label="Default select example"
+                          value={userData.year}
+                          name="year"
+                          onChange={(e) =>
+                            setUserData({ ...userData, year: e.target.value })
+                          }
+                          
+                          required
+                        >
+                          <option value="first">First Year</option>
+                          <option value="second">Second Year</option>
+                          {/* Add more options as needed */}
+                        </select>
+                      </div>
+
+                      <div className="col-md-6">
+                        <label htmlFor="editSector">Sector</label>
+                        <select
+                          id="editSector"
+                          value={userData.sector}
+                          onChange={(e) =>
+                            setUserData({ ...userData, sector: e.target.value })
+                          }
+                          className="form-select"
+                          aria-label="Default select example"
+                          required
+                        >
+                          <option value="">Sector</option>
+                          <option value="IT">Software Engineering</option>
+                          <option value="Electrical">Electrical Engineering</option>
+                          <option value="Mecanical">Mechanical Engineering</option>
+                          <option value="Civil">Civil Engineering</option>
+                          <option value="Indus">Industrial Engineering</option>
+                          <option value="Math">Mathematical Engineering</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div className="row mt-3">
+                      <div className="col-md-3"></div>
+                      <div className="col-md-3 w-50">
+                        <button type="submit" className="btn btn-primary w-100">
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              )}
 
               <div className="row" style={{ marginLeft: "10px" }}>
                 <div className="col-md-8">

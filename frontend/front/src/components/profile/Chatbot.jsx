@@ -1,53 +1,129 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from "react";
+import send from "../../assets/arrow.png";
+import { getAuthToken , getUserId } from "../authentication/authService";
+import axios from "axios";
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
+  const [inputMessage, setInputMessage] = useState("");
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [discussionId, setDiscussionId] = useState(null);
 
-  const handleInputChange = (e) => {
-    setInput(e.target.value);
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
-    // Add user message to the chat
-    setMessages([...messages, { author: 'user', text: input }]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 1000);
 
-    // Simulate a response from the chatbot
-    // For this example, the chatbot's response is hardcoded
-    // In a real-world scenario, you'd send the user's message to a server to get a response
-    const botResponse = `You said: "${input}". I'm just a simple bot, so I don't know what to say yet.`;
+    return () => clearTimeout(timer);
+  }, []);
 
-    // Add bot response to the chat
-    setMessages([...messages, { author: 'bot', text: botResponse }]);
+  useEffect(() => {
+    if (discussionId) {
+      fetchMessages();
+    }
+  }, [discussionId]);
 
-    // Clear the input
-    setInput('');
+  const fetchMessages = async () => {
+    try {
+      const authToken = getAuthToken();
+      if (!authToken) {
+        console.error("No authentication token found.");
+        return;
+      }
+
+      const response = await axios.get(`http://127.0.0.1:8000/accounts/getMessage/${discussionId}`, {
+        headers: {
+          Authorization: `Token ${authToken}`,
+        },
+      });
+
+      if (response.status === 200) {
+        setMessages(response.data.conversation_details);
+      } else {
+        console.error("Failed to fetch messages:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Failed to fetch messages:", error);
+    }
+  };
+
+  const sendMessage = async () => {
+    if (inputMessage.trim() !== "") {
+      try {
+        const authToken = getAuthToken();
+        if (!authToken) {
+          console.error("No authentication token found.");
+          return;
+        }
+  
+        const response = await axios.post(
+          "http://127.0.0.1:8000/accounts/sendMessage",
+          {
+            content: inputMessage.trim(),
+            conversation_id: discussionId,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Token ${authToken}`,
+            },
+          }
+        );
+  
+        if (response.status === 200) {
+          setMessages([...messages, response.data]);
+          setInputMessage("");
+        } else {
+          console.error("Failed to send message:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Failed to send message:", error);
+      }
+    }
+  };
+  
+
+  const handleMessageClick = (index) => {
+    // Delete the message at the given index
+    const updatedMessages = [...messages];
+    updatedMessages.splice(index, 1);
+    setMessages(updatedMessages);
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: 'auto' }}>
-      <h1>Chat with the Chatbot</h1>
-      <div style={{ height: '300px', overflowY: 'scroll', border: '1px solid #ccc', padding: '10px' }}>
-        {messages.map((message, index) => (
-          <p key={index} style={{ textAlign: message.author === 'bot' ? 'left' : 'right' }}>
-            <strong>{message.author === 'bot' ? 'Chatbot' : 'You'}:</strong> {message.text}
-          </p>
-        ))}
+    <div className={"home-page loaded"} style={{ position: "relative", overflowX: "hidden" }}>
+      <div className={`background-image ${isLoaded ? "loaded" : ""}`} style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/bgs.png)`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat", width: "100vw", height: "100vh", position: "relative" }}>
+        <div className={"App loaded"} style={{ transform: "translate(-20%, 0%)" }}>
+          <div className="centered-container">
+            <div className={`chat-container ${isLoaded ? "loaded" : ""}`} style={{ width: "60vw", height: "60vh" }}>
+              <div className={`messages ${isLoaded ? "loaded" : ""}`}>
+                {messages.map((message, index) => {
+                  return (
+                    <div key={index} className={`message message-left`} onClick={() => handleMessageClick(index)}>
+                      {message.content}
+                    </div>
+                  );
+                })}
+                <div ref={messagesEndRef} />
+              </div>
+            </div>
+            <div className={"input-container loaded"} style={{ transform: "translate(25% ,0%)" }}>
+              <input type="text" value={inputMessage} onChange={(e) => setInputMessage(e.target.value)} onKeyPress={(e) => { if (e.key === "Enter") { sendMessage(); } }} style={{ marginTop: "5px" }} placeholder="Type a message..." />
+              <img src={send} alt="Send" style={{ cursor: "pointer", height: "30", width: "50px" }} onClick={sendMessage} />
+            </div>
+          </div>
+        </div>
       </div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={input}
-          onChange={handleInputChange}
-          placeholder="Type your message..."
-          style={{ width: '100%', marginTop: '10px', padding: '5px' }}
-        />
-        <button type="submit" style={{ marginTop: '10px', padding: '5px' }}>
-          Send
-        </button>
-      </form>
     </div>
   );
 };

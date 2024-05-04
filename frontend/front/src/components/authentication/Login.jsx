@@ -54,7 +54,7 @@ const Login = () => {
 
   return (
     <>
-    <Toaster position="top-center" richColors  />
+    <Toaster position="bottom-right" richColors  />
       <div className="no-scroll">
         
           <div className="rectangle">

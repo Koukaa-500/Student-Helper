@@ -32,3 +32,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+class Chat(models.Model):
+    sender = models.ForeignKey(CustomUser, on_delete = models.CASCADE)
+    timeStamp = models.DateTimeField(auto_now = True)
+    content = models.CharField(max_length=10000)
+
+class Conversation(models.Model):
+    message = models.ForeignKey(Chat, on_delete=models.CASCADE)
+

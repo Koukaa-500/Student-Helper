@@ -35,8 +35,10 @@ function App() {
             path="user" 
             element={isAuthenticated ? <Users /> : <Navigate to="/login" />} 
           />
+          <Route path="chatbot"
+           element={isAuthenticated ? <Chatbot/> : <Navigate to = "/login"/>}/>
           <Route exact path="/" element={<Home />} />
-          <Route path="chatbot" element={<Chatbot/>}/>
+          
           <Route path="ourservices" element ={<OurServices/>}/>
           <Route path="courses" element = {<Courses/>}/>
         </Routes>
