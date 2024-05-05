@@ -578,7 +578,7 @@ body {
   }
   
   .messages {
-    height: 400px;
+    height: 700px;
     overflow-y: auto;
     border: 1px solid #ccc;
     border-radius: 10px;

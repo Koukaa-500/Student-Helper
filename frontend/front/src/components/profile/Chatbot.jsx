@@ -26,6 +26,12 @@ const Chatbot = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
+      setMessages([
+        {
+          value: "Welcome! How can I assist you today?",
+          user: "bot"
+        }
+      ]);
       setIsLoaded(true);
     }, 1000);
 
@@ -145,7 +151,7 @@ const Chatbot = () => {
             ...messages,
             response.data, // User's message
             {
-              value: "I'm not integrated yet.", // Bot's response
+              value: "Yeah i can help you.", // Bot's response
               user: "bot",
             }
           ]);
@@ -197,6 +203,17 @@ const Chatbot = () => {
   const handleMessageClick = (message) => {
     setInputMessage(message.value);
   };
+  useEffect(() => {
+    // Initialize messages state with a default welcome message
+    // setMessages([
+    //   {
+    //     value: "Welcome! How can I assist you today?",
+    //     user: "bot"
+    //   }
+    // ]);
+    
+    scrollToBottom();
+  }, []);
 
   return (
     <>
@@ -242,9 +259,11 @@ const Chatbot = () => {
                   </a>
                 </li>
                 <li className="nav-item">
+                <Link to="/user" style={{ textDecoration: "none" }}>
                   <a className="nav-link  " aria-current="page" href="#">
                     Profile
                   </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -284,10 +303,10 @@ const Chatbot = () => {
                   marginBottom: "50px",
                 }}
               >
-                Rooms
+                Conversations
               </a>
               <br></br>
-              <ul style={{ listStyle: "none", padding: 0 }}>
+              <ul style={{ listStyle: "none", padding: 0 , marginTop:"10px"}}>
                 {messages.map((message, index) => (
                   <li
                     key={index}
@@ -313,7 +332,7 @@ const Chatbot = () => {
               <div className="centered-container">
                 <div
                   className={`chat-container ${isLoaded ? "loaded" : ""}`}
-                  style={{ width: "50vw", height: "60vh" }}
+                  style={{ width: "50vw", height: "60vh" ,marginTop:"20px"}}
                 >
                   <div className={`messages ${isLoaded ? "loaded" : ""}`}>
                     {messages.map((message, index) => {
