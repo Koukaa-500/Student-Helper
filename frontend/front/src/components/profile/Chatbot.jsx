@@ -30,12 +30,14 @@ const Chatbot = () => {
   }, []);
 
   useEffect(() => {
-    if (room) {
+    if (!room) {
+      createRoom();
+    } else {
       fetchMessages();
     }
   }, [room]);
 
-  const fetchMessages = async () => {
+  const createRoom = async () => {
     try {
       const authToken = getAuthToken();
       if (!authToken) {
@@ -43,13 +45,46 @@ const Chatbot = () => {
         return;
       }
   
-      const response = await axios.get(`http://127.0.0.1:8000/chatting/getMessages/message/${room}/`, {
-        headers: {
-          Authorization: `Token ${authToken}`,
+      const response = await axios.post(
+        "http://127.0.0.1:8000/chatting/createRoom/",
+        {
+          name: "New Room Name",
         },
-      });
+        {
+          headers: {
+            Authorization: `Token ${authToken}`,
+          },
+        }
+      );
   
       if (response.status === 201) {
+        setRoom(response.data.id);
+      } else {
+        console.error("Failed to create room:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Failed to create room:", error);
+    }
+  };
+  
+  const fetchMessages = async () => {
+    try {
+      const authToken = getAuthToken();
+      if (!authToken) {
+        console.error("No authentication token found.");
+        return;
+      }
+
+      const response = await axios.get(
+        `http://127.0.0.1:8000/chatting/getMessages/message/${room}/`,
+        {
+          headers: {
+            Authorization: `Token ${authToken}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
         setMessages(response.data);
       } else {
         console.error("Failed to fetch messages:", response.statusText);
@@ -58,11 +93,13 @@ const Chatbot = () => {
       console.error("Failed to fetch messages:", error);
     }
   };
-  
-  
 
-  
   const sendMessage = async () => {
+    // Check if room is not set, then create a new room
+    if (!room) {
+      await createRoom();
+    }
+  
     if (inputMessage.trim() !== "") {
       try {
         const authToken = getAuthToken();
@@ -75,7 +112,7 @@ const Chatbot = () => {
           value: inputMessage.trim(),
           date: new Date().toISOString(),
           user: "ghaith@ensit.u-tunis.tn",
-          room: '1' // Assuming you have user info
+          room: room, // Set the room value here
         };
   
         console.log("Sending data:", data); // Log the data before sending
@@ -100,13 +137,8 @@ const Chatbot = () => {
     }
   };
   
-  
-      
-    
-  
 
   const handleMessageClick = (index) => {
-    // Delete the message at the given index
     const updatedMessages = [...messages];
     updatedMessages.splice(index, 1);
     setMessages(updatedMessages);
@@ -119,9 +151,9 @@ const Chatbot = () => {
           <div className="navbar">
             <div className="collapse navbar-collapse" id="navbarNav">
               <img
-                src={logo} // Replace `logo` with the path to your logo image
+                src={logo}
                 alt="Logo"
-                style={{ height: "50px", marginRight: "20px" }} // Adjust height and margin as needed
+                style={{ height: "50px", marginRight: "20px" }}
               />
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
@@ -180,16 +212,15 @@ const Chatbot = () => {
               position: "relative",
             }}
           >
-            {/* Old conversation section */}
             <div
               className="oldConversation col-md-2"
               style={{
-                backgroundColor: "white", // Light brown color
+                backgroundColor: "white",
                 padding: "20px",
                 height: "80vh",
                 position: "fixed",
                 left: 0,
-                overflow: "hidden", // Hide overflow content
+                overflow: "hidden",
               }}
             >
               <a
@@ -202,7 +233,6 @@ const Chatbot = () => {
                 Old Conversations
               </a>
               <br></br>
-
               <ul style={{ listStyle: "none", padding: 0 }}>
                 <li
                   style={{
@@ -215,97 +245,9 @@ const Chatbot = () => {
                 >
                   C++ courses
                 </li>
-                <li
-                  style={{
-                    marginBottom: "10px",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    backgroundColor: "#FFF2D7",
-                    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                  }}
-                >
-                  DJIKSTRA algorithms
-                </li>
-                <li
-                  style={{
-                    marginBottom: "10px",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    backgroundColor: "#FFF2D7",
-                    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                  }}
-                >
-                  Machine Learning explaining
-                </li>
-                <li
-                  style={{
-                    marginBottom: "10px",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    backgroundColor: "#FFF2D7",
-                    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                  }}
-                >
-                  Probablity and Statistics
-                </li>
-                <li
-                  style={{
-                    marginBottom: "10px",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    backgroundColor: "#FFF2D7",
-                    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                  }}
-                >
-                  How to center a div
-                </li>
-                <li
-                  style={{
-                    marginBottom: "10px",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    backgroundColor: "#FFF2D7",
-                    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                  }}
-                >
-                  C'est quoi le chiffrement de Cesar
-                </li>
-                <li
-                  style={{
-                    marginBottom: "10px",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    backgroundColor: "#FFF2D7",
-                    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                  }}
-                >
-                  Comment diviser en sous réseau
-                </li>
-                <li
-                  style={{
-                    marginBottom: "10px",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    backgroundColor: "#FFF2D7",
-                    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                  }}
-                >
-                  Expliquer l'UML briévement
-                </li>
-                <li
-                  style={{
-                    marginBottom: "10px",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    backgroundColor: "#FFF2D7",
-                    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                  }}
-                >
-                  Declare a matrix in C
-                </li>
+                {/* Add more list items as needed */}
               </ul>
             </div>
-
             <div
               className={"App loaded col-md-10"}
               style={{ transform: "translate(0%, -10%)" }}
