@@ -1,7 +1,7 @@
 // authService.js
 
 export const setAuthToken = (token, refreshToken) => {
-  const tokenExpiry = new Date().getTime() + 600000; // 10 minutes in milliseconds
+  const tokenExpiry = new Date().getTime() + 600000000000; // 10 minutes in milliseconds
 
   localStorage.setItem("authToken", token);
   localStorage.setItem("refreshToken", refreshToken); // Store the refresh token

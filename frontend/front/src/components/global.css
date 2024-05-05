@@ -568,13 +568,13 @@ body {
   }
   
   .centered-container {
-    width: 80%;
+    width: 70%;
   }
   
   .chat-container {
     background-color: #f0f0f0;
     border-radius: 10px;
-    padding: 20px;
+    
   }
   
   .messages {
@@ -815,3 +815,11 @@ body {
     opacity: 1;
   }
   
+
+  .oldConversation{
+    width: 20vw;
+    height : 100vh;
+    border: #b63030;
+    border-radius:7px ;
+    left:0;
+  }

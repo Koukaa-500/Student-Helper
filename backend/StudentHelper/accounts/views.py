@@ -3,12 +3,12 @@ from rest_framework.authentication import SessionAuthentication, TokenAuthentica
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
-from .models import CustomUser,Chat,Conversation
+from .models import CustomUser
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
-from .serializers import UserSerializer , ChatSerializer
+from .serializers import UserSerializer 
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.core.files.base import ContentFile
 from django.contrib.auth.hashers import make_password
@@ -193,27 +193,27 @@ def edit_profile(request):
 #########################################Chatbot#############################
 
 
-from rest_framework.authtoken.models import Token
+# from rest_framework.authtoken.models import Token
 
-@api_view(['POST'])
-@authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
-def sendMessage(request):
-    content = request.data.get('content', '')  # Get the content from request data
-    conversation_id = request.data.get('conversation_id', '')  # Get the conversation_id from request data
+# @api_view(['POST'])
+# @authentication_classes([TokenAuthentication])
+# @permission_classes([IsAuthenticated])
+# def sendMessage(request):
+#     content = request.data.get('content', '')  # Get the content from request data
+#     conversation_id = request.data.get('conversation_id', '')  # Get the conversation_id from request data
     
-    # Retrieve the user ID from the authenticated user
-    user_id = request.user.id
+#     # Retrieve the user ID from the authenticated user
+#     user_id = request.user.id
     
-    # Create a new message with the extracted user ID
-    new_message = Chat.objects.create(content=content, user_id=user_id, conversation_id=conversation_id)
+#     # Create a new message with the extracted user ID
+#     new_message = Chat.objects.create(content=content, user_id=user_id, conversation_id=conversation_id)
     
-    return Response({"message": "Message sent successfully"})
+#     return Response({"message": "Message sent successfully"})
 
-@api_view(['GET'])
-@authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
-def getMessage(request, conversation_id):
-    conversation_messages = Chat.objects.filter(conversation_id=conversation_id)
-    serializer = ChatSerializer(conversation_messages, many=True)
-    return JsonResponse({'conversation_details': serializer.data})
+# @api_view(['GET'])
+# @authentication_classes([TokenAuthentication])
+# @permission_classes([IsAuthenticated])
+# def getMessage(request, conversation_id):
+#     conversation_messages = Chat.objects.filter(conversation_id=conversation_id)
+#     serializer = ChatSerializer(conversation_messages, many=True)
+#     return JsonResponse({'conversation_details': serializer.data})

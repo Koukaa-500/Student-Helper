@@ -14,7 +14,7 @@ urlpatterns = [
     path('updateimage', views.update_profile_image, name='updateimage'),
     path('media/profile_images/<str:filename>/', views.get_profile_image, name='get_profile_image'),
     path('edit-profile', views.edit_profile, name='edit-profile'),
-    path('sendMessage',views.sendMessage , name = 'send_message'),
-    path('getMessage/:discussion_id' , views.getMessage,name='get_message')
+    # path('sendMessage',views.sendMessage , name = 'send_message'),
+    # path('getMessage/:discussion_id' , views.getMessage,name='get_message')
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
