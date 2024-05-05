@@ -24,9 +24,12 @@ const StepOne = ({ formData, handleChange, handleNextStep }) => (
           style={{
             width: "80%", // Make all text fields the same width
             height: 50,
-            background: "#CDC5B5",
+            background: "#FDF8EE",
             borderRadius: 10,
             borderTop: "1px black solid",
+            borderLeft: "1px black solid",
+            borderBottom: "1px black solid",
+            borderRight: "1px black solid",
             marginLeft: 50,
             marginTop: 10,
           }}
@@ -45,9 +48,12 @@ const StepOne = ({ formData, handleChange, handleNextStep }) => (
           style={{
             width: "80%", // Make all text fields the same width
             height: 50,
-            background: "#CDC5B5",
+            background: "#FDF8EE",
             borderRadius: 10,
             borderTop: "1px black solid",
+            borderLeft: "1px black solid",
+            borderBottom: "1px black solid",
+            borderRight: "1px black solid",
             marginLeft: 50,
             marginTop: 10,
           }}
@@ -61,7 +67,7 @@ const StepOne = ({ formData, handleChange, handleNextStep }) => (
           style={{
             width: 207,
             height: 50,
-            background: "#E3D4B7",
+            background: "#FDF8EE",
             borderRadius: 60,
             border: "3px black solid",
           }}
@@ -90,9 +96,12 @@ const StepTwo = ({ formData, handleChange, handlePrevStep, handleSubmit }) => (
               required
               style={{
                 height: 50,
-                background: "#CDC5B5",
+                background: "#FDF8EE",
                 borderRadius: 10,
                 borderTop: "1px black solid",
+                            borderLeft: "1px black solid",
+                            borderBottom: "1px black solid",
+                            borderRight: "1px black solid",
               }}
             />
           </div>
@@ -110,9 +119,12 @@ const StepTwo = ({ formData, handleChange, handlePrevStep, handleSubmit }) => (
               required
               style={{
                 height: 50,
-                background: "#CDC5B5",
+                background: "#FDF8EE",
                 borderRadius: 10,
                 borderTop: "1px black solid",
+                            borderLeft: "1px black solid",
+                            borderBottom: "1px black solid",
+                            borderRight: "1px black solid",
               }}
             />
           </div>
@@ -130,9 +142,12 @@ const StepTwo = ({ formData, handleChange, handlePrevStep, handleSubmit }) => (
               aria-label="Default select example"
               style={{
                 height: 50,
-                background: "#CDC5B5",
+                background: "#FDF8EE",
                 borderRadius: 10,
                 borderTop: "1px black solid",
+                            borderLeft: "1px black solid",
+                            borderBottom: "1px black solid",
+                            borderRight: "1px black solid",
               }}
               required
             > 
@@ -156,9 +171,12 @@ const StepTwo = ({ formData, handleChange, handlePrevStep, handleSubmit }) => (
               onChange={handleChange}
               style={{
                 height: 50,
-                background: "#CDC5B5",
+                background: "#FDF8EE",
                 borderRadius: 10,
                 borderTop: "1px black solid",
+                            borderLeft: "1px black solid",
+                            borderBottom: "1px black solid",
+                            borderRight: "1px black solid",
               }}
               required
             >
@@ -178,7 +196,7 @@ const StepTwo = ({ formData, handleChange, handlePrevStep, handleSubmit }) => (
             marginLeft:"2Linkpx",
             width: 207,
             height: 50,
-            background: "#E3D4B7",
+            background: "#FDF8EE",
             borderRadius: 60,
             border: "3px black solid",
           }}
@@ -193,7 +211,7 @@ const StepTwo = ({ formData, handleChange, handlePrevStep, handleSubmit }) => (
             marginLeft:"10px",
             width: 207,
             height: 50,
-            background: "#E3D4B7",
+            background: "#FDF8EE",
             borderRadius: 60,
             border: "3px black solid",
             marginRight: "10px",

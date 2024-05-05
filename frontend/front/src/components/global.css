@@ -11,7 +11,7 @@ body {
   
   }
   .card {
-    background: linear-gradient(180deg, #f2ebdb 0%, #e7d5b2 63%, #8c887f 100%);
+    background: #FDF8EE;
     border-radius: 14;
   }
  html{
@@ -26,7 +26,7 @@ body {
       border-right: 1px solid #333;
       border-bottom: 1px solid #333;
       border-left: 1px solid #333;
-      background: linear-gradient(180deg, #f2ebdb 0%, #e7d5b2 63%, #8c887f 100%);
+      background: #FDF8EE;
       /* background: transparent; */
   }
   .field{
