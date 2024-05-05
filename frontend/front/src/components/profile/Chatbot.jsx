@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import send from "../../assets/arrow.png";
 import { getAuthToken, getUserId } from "../authentication/authService";
 import axios from "axios";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 
 const Chatbot = () => {
@@ -10,8 +10,11 @@ const Chatbot = () => {
   const [inputMessage, setInputMessage] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
   const [room, setRoom] = useState(null);
-
+  const [value, setValue] = useState("");
   const messagesEndRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -44,11 +47,12 @@ const Chatbot = () => {
         console.error("No authentication token found.");
         return;
       }
-  
+
       const response = await axios.post(
         "http://127.0.0.1:8000/chatting/createRoom/",
         {
           name: "New Room Name",
+          messages: messages,
         },
         {
           headers: {
@@ -56,7 +60,7 @@ const Chatbot = () => {
           },
         }
       );
-  
+
       if (response.status === 201) {
         setRoom(response.data.id);
       } else {
@@ -66,12 +70,19 @@ const Chatbot = () => {
       console.error("Failed to create room:", error);
     }
   };
-  
+
   const fetchMessages = async () => {
     try {
       const authToken = getAuthToken();
       if (!authToken) {
         console.error("No authentication token found.");
+        return;
+      }
+      if (!value) {
+        console.log("No room exists yet.");
+        // Handle the case where there are no messages (new chat)
+        // For example, you can set an empty array for messages in the state
+        setMessages([]);
         return;
       }
 
@@ -117,16 +128,27 @@ const Chatbot = () => {
   
         console.log("Sending data:", data); // Log the data before sending
   
-        const response = await axios.post("http://127.0.0.1:8000/chatting/sendMessage/", data, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Token ${authToken}`,
-          },
-        });
+        const response = await axios.post(
+          "http://127.0.0.1:8000/chatting/sendMessage/",
+          data,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Token ${authToken}`,
+            },
+          }
+        );
   
         if (response.status === 201) {
-          // Update the messages state with the sent message
-          setMessages([...messages, response.data]);
+          // Update the messages state with the sent message and the bot's response
+          setMessages([
+            ...messages,
+            response.data, // User's message
+            {
+              value: "I'm not integrated yet.", // Bot's response
+              user: "bot",
+            }
+          ]);
           setInputMessage(""); // Clear the input field after sending
         } else {
           console.error("Failed to send message:", response.statusText);
@@ -137,11 +159,43 @@ const Chatbot = () => {
     }
   };
   
+  
+  useEffect(() => {
+    const saveConversationDetails = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.post(
+          `http://127.0.0.1:8000/chatting/save_room_conversation/${room}/`,
+          { messages: messages },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Token ${getAuthToken()}`,
+            },
+          }
+        );
 
-  const handleMessageClick = (index) => {
-    const updatedMessages = [...messages];
-    updatedMessages.splice(index, 1);
-    setMessages(updatedMessages);
+        if (response.status === 200) {
+          setSuccess(true);
+        } else {
+          setError('Failed to save conversation details');
+        }
+      } catch (error) {
+        console.error('Failed to save conversation details:', error);
+        setError('Failed to save conversation details');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (messages && messages.length > 0) {
+      saveConversationDetails();
+    }
+  }, [room, messages]);
+
+
+  const handleMessageClick = (message) => {
+    setInputMessage(message.value);
   };
 
   return (
@@ -230,22 +284,26 @@ const Chatbot = () => {
                   marginBottom: "50px",
                 }}
               >
-                Old Conversations
+                Rooms
               </a>
               <br></br>
               <ul style={{ listStyle: "none", padding: 0 }}>
-                <li
-                  style={{
-                    marginBottom: "10px",
-                    padding: "10px",
-                    borderRadius: "5px",
-                    backgroundColor: "#FFF2D7",
-                    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                  }}
-                >
-                  C++ courses
-                </li>
-                {/* Add more list items as needed */}
+                {messages.map((message, index) => (
+                  <li
+                    key={index}
+                    style={{
+                      marginBottom: "10px",
+                      padding: "10px",
+                      borderRadius: "5px",
+                      backgroundColor: "#FFF2D7",
+                      boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => handleMessageClick(message)}
+                  >
+                    {message.value}
+                  </li>
+                ))}
               </ul>
             </div>
             <div
@@ -267,7 +325,11 @@ const Chatbot = () => {
                               ? "message-right"
                               : "message-left"
                           }`}
-                          onClick={() => handleMessageClick(index)}
+                          onClick={() => handleMessageClick(message)}
+                          style={{
+                            backgroundColor:
+                              message.user === "bot" ? "#e0e0e0" : "blue",
+                          }}
                         >
                           {message.value}
                         </div>
