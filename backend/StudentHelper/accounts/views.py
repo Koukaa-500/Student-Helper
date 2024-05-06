@@ -8,9 +8,11 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
-from .serializers import UserSerializer
+from .serializers import UserSerializer 
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.core.files.base import ContentFile
+from django.contrib.auth.hashers import make_password
+
 # Create your views here.
 
 from django.contrib.auth import authenticate
@@ -55,7 +57,7 @@ def signup(request):
         # Check if a user with the given email already exists
         if CustomUser.objects.filter(email=email).exists():
             return Response({"error": "Email already exists"}, status=status.HTTP_400_BAD_REQUEST)
-        if '@ensit.u-tunis.com' not in email:
+        if '@ensit.u-tunis.tn' not in email:
             return Response({"error":"Please type a valid ensit email"})
         # Create the user
         user = CustomUser.objects.create(email=email, first_name=first_name,last_name=last_name,sector=sector,year=year)
@@ -145,7 +147,7 @@ def update_profile_image(request):
 
 
 
-from django.http import HttpResponseNotFound, FileResponse
+from django.http import HttpResponse, HttpResponseNotFound, FileResponse, JsonResponse
 from django.conf import settings
 import os
 
@@ -170,10 +172,48 @@ def get_profile_image(request, filename):
 def edit_profile(request):
     user = request.user
 
+    # Exclude profile_image field from the request data
+    request_data = request.data.copy()
+    request_data.pop('profile_image', None)
+
+    # Hash the password if it's included in the request data
+    if 'password' in request_data:
+        request_data['password'] = make_password(request_data['password'])
+
     # Validate and update user data
-    serializer = UserSerializer(user, data=request.data, partial=True)
+    serializer = UserSerializer(user, data=request_data, partial=True)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+#########################################Chatbot#############################
+
+
+# from rest_framework.authtoken.models import Token
+
+# @api_view(['POST'])
+# @authentication_classes([TokenAuthentication])
+# @permission_classes([IsAuthenticated])
+# def sendMessage(request):
+#     content = request.data.get('content', '')  # Get the content from request data
+#     conversation_id = request.data.get('conversation_id', '')  # Get the conversation_id from request data
+    
+#     # Retrieve the user ID from the authenticated user
+#     user_id = request.user.id
+    
+#     # Create a new message with the extracted user ID
+#     new_message = Chat.objects.create(content=content, user_id=user_id, conversation_id=conversation_id)
+    
+#     return Response({"message": "Message sent successfully"})
+
+# @api_view(['GET'])
+# @authentication_classes([TokenAuthentication])
+# @permission_classes([IsAuthenticated])
+# def getMessage(request, conversation_id):
+#     conversation_messages = Chat.objects.filter(conversation_id=conversation_id)
+#     serializer = ChatSerializer(conversation_messages, many=True)
+#     return JsonResponse({'conversation_details': serializer.data})

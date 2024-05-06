@@ -1,7 +1,7 @@
 // authService.js
 
 export const setAuthToken = (token, refreshToken) => {
-  const tokenExpiry = new Date().getTime() + 600000; // 10 minutes in milliseconds
+  const tokenExpiry = new Date().getTime() + 600000000000; // 10 minutes in milliseconds
 
   localStorage.setItem("authToken", token);
   localStorage.setItem("refreshToken", refreshToken); // Store the refresh token
@@ -11,6 +11,7 @@ export const setAuthToken = (token, refreshToken) => {
 export const getAuthToken = () => {
   const token = localStorage.getItem("authToken");
   const tokenExpiry = localStorage.getItem("tokenExpiry");
+  const refreshToken = localStorage.getItem("refreshToken");
 
   if (token && tokenExpiry) {
     if (new Date().getTime() > parseInt(tokenExpiry, 10)) {
@@ -20,7 +21,7 @@ export const getAuthToken = () => {
     }
     return token; // Valid token
   }
-  return null; // No token or expiry time
+  return refreshToken; // No token or expiry time
 };
 
 export const removeAuthToken = () => {
@@ -55,3 +56,40 @@ export const handleLogout = async () => {
     alert("An error occurred while logging out. Please try again.");
   }
 };
+
+
+
+// authService.js
+
+export const getUserId = () => {
+  const authToken = localStorage.getItem("authToken");
+  if (authToken) {
+    // Decode the JWT token to extract user information
+    const tokenParts = authToken.split(".");
+    if (tokenParts.length === 3) {
+      const payload = JSON.parse(atob(tokenParts[1]));
+      return payload.user_id; // Assuming 'user_id' is the key for user ID in the token payload
+    }
+  }
+  return null; // Return null if token or user ID is not available
+};
+
+
+// Function to parse the JWT token payload
+const parseAuthToken = (token) => {
+  try {
+    const tokenParts = token.split('.');
+    if (tokenParts.length !== 3) {
+      throw new Error('Invalid token format');
+    }
+    
+    const encodedPayload = tokenParts[1];
+    const decodedPayload = atob(encodedPayload);
+    return JSON.parse(decodedPayload);
+  } catch (error) {
+    
+    return null;
+  }
+};
+
+

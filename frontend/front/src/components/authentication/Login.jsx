@@ -54,7 +54,7 @@ const Login = () => {
 
   return (
     <>
-    <Toaster position="top-center" richColors  />
+    <Toaster position="bottom-right" richColors  />
       <div className="no-scroll">
         
           <div className="rectangle">
@@ -136,9 +136,12 @@ const Login = () => {
                           style={{
                             width: "70%", // Make all text fields the same width
                             height: 50,
-                            background: "#CDC5B5",
+                            background: "#FDF8EE",
                             borderRadius: 10,
                             borderTop: "1px black solid",
+                            borderLeft: "1px black solid",
+                            borderBottom: "1px black solid",
+                            borderRight: "1px black solid",
                             marginLeft: 75,
                             marginTop: 10,
                           }}
@@ -156,9 +159,12 @@ const Login = () => {
                           style={{
                             width: "70%", // Make all text fields the same width
                             height: 50,
-                            background: "#CDC5B5",
+                            background: "#FDF8EE",
                             borderRadius: 10,
                             borderTop: "1px black solid",
+                            borderLeft: "1px black solid",
+                            borderBottom: "1px black solid",
+                            borderRight: "1px black solid",
                             marginLeft: 75,
                             marginTop: 10,
                           }}
@@ -175,15 +181,15 @@ const Login = () => {
                           style={{
                             width: 207,
                             height: 50,
-                            background: "#E3D4B7",
+                            background: "#FDF8EE",
                             borderRadius: 60,
                             border: "3px black solid",
                           }}
                           onMouseEnter={(e) => {
-                            e.target.style.backgroundColor = "#5B3E08";
+                            e.target.style.backgroundColor = "#FDF8EE";
                           }} /* Change background color on hover */
                           onMouseLeave={(e) => {
-                            e.target.style.backgroundColor = "#E3D4B7";
+                            e.target.style.backgroundColor = "#FDF8EE";
                           }} /* Change back to default color when not hovered */
                           onClick={handleLoginClick}
                         >

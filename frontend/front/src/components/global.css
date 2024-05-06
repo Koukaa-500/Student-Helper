@@ -11,7 +11,7 @@ body {
   
   }
   .card {
-    background: linear-gradient(180deg, #f2ebdb 0%, #e7d5b2 63%, #8c887f 100%);
+    background: #FDF8EE;
     border-radius: 14;
   }
  html{
@@ -26,7 +26,7 @@ body {
       border-right: 1px solid #333;
       border-bottom: 1px solid #333;
       border-left: 1px solid #333;
-      background: linear-gradient(180deg, #f2ebdb 0%, #e7d5b2 63%, #8c887f 100%);
+      background: #FDF8EE;
       /* background: transparent; */
   }
   .field{
@@ -298,10 +298,11 @@ body {
 
 .bottombox{
     height:80px;
-    
+    left : 0px;
     display: flex;
     align-items:center;
     justify-content: center;
+    transform: translate(-28%);
     
   }
   
@@ -450,7 +451,7 @@ body {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 1);
-    width:20rem;
+    width:22rem;
     height: 10rem;
     display: flex;
     align-items: center;
@@ -477,4 +478,351 @@ body {
     border-bottom: 1px solid #333;
     border-left: 1px solid #333;
     
+  }
+
+  .editProfileForm {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 2px solid black;
+    padding: 20px;
+    z-index: 1000; /* Ensure it appears on top of other content */
+    width: 600px; /* Adjust width as needed */
+    height : 300px;
+    /* display: grid;
+    place-self: center; */
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 7px;
+    border-top: 1px solid #333;
+    border-right: 1px solid #333;
+    border-bottom: 1px solid #333;
+    border-left: 1px solid #333;
+    background: #f2ebdb;
+  }
+  
+
+  /* //////////////////////////////////// */
+
+
+
+
+  .App {
+    text-align: center;
+  }
+  
+  .chat-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+  }
+  
+  .chat-column {
+    width: 45%;
+  }
+  
+  .messages {
+    height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .message {
+    margin-bottom: 5px;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .message-right {
+    background-color: #007bff;
+    color: #fff;
+    align-self: flex-end;
+    max-width : 200px;
+    word-break: break-word;
+    text-align : left;
+  }
+  
+  .message-left {
+    background-color: #ccc;
+    align-self: flex-start;
+    max-width : 200px;
+    word-break: break-word;
+    text-align : left;
+  }
+  
+  input[type='text'] {
+    width: calc(100% - 80px);
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  
+ 
+  
+  .App {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .centered-container {
+    width: 70%;
+  }
+  
+  .chat-container {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    
+  }
+  
+  .messages {
+    height: 700px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .message {
+    margin-bottom: 5px;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .message-right {
+    background-color: #007bff;
+    color: #fff;
+    align-self: flex-end;
+  }
+  
+  .message-left {
+    background-color: #ccc;
+    color: #000;
+    align-self: flex-start;
+  }
+  
+  input[type='text'] {
+    width: calc(100% - 80px);
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  
+ 
+  
+  
+  
+  .color-selector {
+    margin-bottom: 10px;
+  }
+  
+  input[type='radio'] {
+    margin-right: 5px;
+  }
+  
+  .App {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  
+    font-family: Arial, sans-serif;
+  }
+  
+  .centered-container {
+    width: 100%;
+    max-width: 600px;
+  }
+  
+  .chat-container {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+ 
+  .messages {
+    width: 200%; /* Largeur de 80% de l'écran */
+    max-width: 600px; /* Largeur maximale de 600px pour éviter qu'elle ne devienne trop large */
+    height: 70vh; /* Hauteur de 60% de la hauteur de l'écran */
+    overflow-y: auto; /* Ajout d'un défilement vertical si nécessaire */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 30px;
+    margin: 0 auto;
+    max-height: 380px;
+    
+    padding: 10px;
+    display: flex;
+    flex-direction: column; /* Pour centrer horizontalement */
+  }
+  .message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    max-width: 70%;
+  }
+ 
+  
+
+  
+  .color-selector {
+    padding: 10px;
+    
+  }
+  
+  .input-container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .input-container input[type="text"] {
+    flex: 1;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+    font-size: 16px;
+  }
+  
+ 
+  
+  .input-container button:hover {
+    background-color: #0056b3;
+  }
+  
+  .input-container button:focus {
+    outline: none;
+  }
+  
+  /* Animation for messages */
+  .message {
+    animation: slideIn 0.5s ease forwards;
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  
+  
+  
+  
+  
+  /* Animation when button is clicked */
+  @keyframes clickAnimation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+  
+ 
+  html,
+  body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      
+  }
+  
+  @keyframes glowing {
+      0% { background-position: 0 0; }
+      50% { background-position: 400% 0; }
+      100% { background-position: 0 0; }
+  }
+  input[type="radio"] {
+    /* Masquer le bouton radio par défaut */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    /* Définir la taille souhaitée du bouton */
+    width: 20px;
+    height: 20px;
+    /* Ajouter une bordure pour délimiter le bouton */
+    border: 2px solid #333;
+    border-radius: 50%;
+    /* Ajouter de l'espace autour du bouton */
+    margin-right: 5px;
+    /* Position relative pour le positionnement de l'indicateur de sélection */
+    position: relative;
+  }
+  
+  /* Styling de l'indicateur de sélection lorsque le bouton est coché */
+  input[type="radio"]:checked::before {
+    /* Créer un cercle pour l'indicateur de sélection */
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #333;
+    /* Positionner l'indicateur de sélection au centre du bouton */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .input-container input[type="text"] {
+    /* Définir la taille de la police et la hauteur du champ d'entrée */
+    font-size: 16px;
+    height: 40px;
+    /* Ajouter de l'espace autour du champ d'entrée */
+    padding: 8px;
+    /* Définir la largeur du champ d'entrée */
+    width: 100%;
+    /* Ajouter une bordure pour délimiter le champ d'entrée */
+    border: 2px solid #333;
+    border-radius: 5px;
+    /* Ajouter une marge inférieure pour l'espace entre le champ d'entrée et le bouton */
+    margin-bottom: 10px;
+  }
+  
+  .input-container input[type="text"]:focus {
+    /* Modifier la couleur de la bordure lorsque le champ d'entrée est en focus */
+    border-color: #007bff;
+    /* Ajouter une ombre pour indiquer le focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  .message-container {
+    opacity: 0; /* Initialiser l'opacité à 0 pour l'animation d'ouverture */
+    transition: opacity 1s ease-in-out; /* Ajouter une transition pour l'opacité */
+  }
+  
+  .message-container.loaded {
+    opacity: 1; /* Lorsque la classe "loaded" est ajoutée, l'opacité passe à 1 */
+  }
+  .fade-in {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+  
+  .fade-in.loaded {
+    opacity: 1;
+  }
+  
+
+  .oldConversation{
+    width: 20vw;
+    height : 100vh;
+    border: #b63030;
+    border-radius:7px ;
+    left:0;
   }

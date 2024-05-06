@@ -95,18 +95,21 @@ const Home = () => {
 
       {/* Barre de menu transparente */}
       <div className="menu-bar" style={{ marginLeft: "20px", padding: "50px" }}>
-        <Link href="/" className="menu-item">
+        <Link to="/" className="menu-item">
           Home
         </Link>
-        <Link href="/AboutUs" className="menu-item">
+        <Link to="/AboutUs" className="menu-item">
           About us
         </Link>
         <Link to="/OurServices" className="menu-item">
           Our service
         </Link>
 
-        <Link href="/ContactUs" className="menu-item">
+        <Link to="/ContactUs" className="menu-item">
           Contact us
+        </Link>
+        <Link to="/Chatbot" className="menu-item">
+          Chat Bot
         </Link>
         <Link
           type="button"
@@ -655,11 +658,11 @@ const Home = () => {
             }}
           >
             <h2 className="visually-hidden">Title for screen readers</h2>
-            <a className="visually-hidden-focusable" href="#content">
+            <a className="visually-hidden-focusable" to="#content">
               Skip to main content
             </a>
             <div className="visually-hidden-focusable">
-              A container with a <a href="#">focusable element</a>.
+              A container with a <a to="#">focusable element</a>.
             </div>
             <p style={{ fontWeight: "bold", color: "white" }}>
               Subscribe to our newsletter
