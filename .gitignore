@@ -5,7 +5,12 @@
 /build
 /dist
 
-# Python dependencie
+# Python dependenci
+/backend/venv
+/backend/StudentHelper/chatbot/
+/backend/StudentHelper/chatting/chroma
+/backend/StudentHelper/chatting/data
+/backend/StudentHelper/chroma
 
 /venv
 /venv
@@ -30,3 +35,4 @@
 
 # MongoDB data directory
 /db/data
+

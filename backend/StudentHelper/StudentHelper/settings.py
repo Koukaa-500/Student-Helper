@@ -105,8 +105,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',  # Use 'mongodb' as the database engine
         'NAME': 'pfa',
-        'USER': 'pfa',
-        'PASSWORD': 'nabil1',
+        'USER': 'postgres',
+        'PASSWORD': 'test',
         'HOST': 'localhost',
         'PORT': '5432',
             # Specify your MongoDB database name

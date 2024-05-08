@@ -4,6 +4,15 @@ from rest_framework.response import Response
 from .models import Room, Message
 from .serializers import RoomSerializer, MessageSerializer
 from rest_framework import status
+import argparse
+from dataclasses import dataclass
+from langchain_chroma import Chroma
+from langchain_community.embeddings import OpenAIEmbeddings
+from langchain_openai import OpenAIEmbeddings
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
+
 @api_view(['GET'])
 def get_messages(request, room):
     try:
@@ -25,19 +34,54 @@ def send_message(request):
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+import subprocess
+import os
 
 @api_view(['POST'])
 def chatbot_endpoint(request):
     if request.method == 'POST':
-        # Get the user's message from the request data
-        user_message = request.data.get('message', '')
+        
+        query_text = request.data.get('message', '')
 
-        # Here you can implement the logic to process the user's message and generate a response from the chatbot
-        # For demonstration, let's just echo the user's message
-        bot_response = f"Echoing: {"hey"}"
+        CHROMA_PATH = "chroma"
+        PROMPT_TEMPLATE = """
+        You Are Student Helper ChatBot (ENSIT edition),
+        Answer the question based on the following context if it has any relevant information to answer the question. 
+        Otherwise, answer the question based on your knowledge without making it obvious that you didn't:
+
+        {context}
+
+        ---
+
+        Answer the question based on the above context, Answer in the same language in the question: {question}
+        """
+        embedding_function = OpenAIEmbeddings()
+        db = Chroma(persist_directory=CHROMA_PATH, embedding_function=embedding_function)
+        
+        results = db.similarity_search_with_relevance_scores(query_text, k=3)
+        context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
+        
+        
+        prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
+        prompt = prompt_template.format(context=context_text, question=query_text)
+        sources = [doc.metadata.get("source", None) for doc, _score in results]
+        sources = list(set(sources))
+        # print(sources)
+        chat =ChatOpenAI(model="gpt-3.5-turbo",temperature=0.4)
+        response_text = chat.invoke(prompt).content 
+        # response_text += f"\nSources: {', '.join(sources)}"
+        
+
+        
+
+        
+        # Print the text from the output.txt file
+        # print(output_text)
+        
+        # print(bot_response)
 
         # Return the bot's response in JSON format
-        return Response({'response': bot_response})
+        return Response({'response': response_text})
 
 
 
