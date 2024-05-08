@@ -23,6 +23,21 @@ def send_message(request):
     return Response(serializer.errors, status=400)
 
 
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+@api_view(['POST'])
+def chatbot_endpoint(request):
+    if request.method == 'POST':
+        # Get the user's message from the request data
+        user_message = request.data.get('message', '')
+
+        # Here you can implement the logic to process the user's message and generate a response from the chatbot
+        # For demonstration, let's just echo the user's message
+        bot_response = f"Echoing: {"hey"}"
+
+        # Return the bot's response in JSON format
+        return Response({'response': bot_response})
 
 
 

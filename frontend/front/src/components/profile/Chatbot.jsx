@@ -114,56 +114,61 @@ const Chatbot = () => {
   const sendMessage = async () => {
     // Check if room is not set, then create a new room
     if (!room) {
-      await createRoom();
+        await createRoom();
     }
-  
+
     if (inputMessage.trim() !== "") {
-      try {
-        const authToken = getAuthToken();
-        if (!authToken) {
-          console.error("No authentication token found.");
-          return;
-        }
-  
-        const data = {
-          value: inputMessage.trim(),
-          date: new Date().toISOString(),
-          user: "ghaith@ensit.u-tunis.tn",
-          room: room, // Set the room value here
-        };
-  
-        console.log("Sending data:", data); // Log the data before sending
-  
-        const response = await axios.post(
-          "http://127.0.0.1:8000/chatting/sendMessage/",
-          data,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Token ${authToken}`,
-            },
-          }
-        );
-  
-        if (response.status === 201) {
-          // Update the messages state with the sent message and the bot's response
-          setMessages([
-            ...messages,
-            response.data, // User's message
-            {
-              value: "Yeah i can help you.", // Bot's response
-              user: "bot",
+        try {
+            const authToken = getAuthToken();
+            if (!authToken) {
+                console.error("No authentication token found.");
+                return;
             }
-          ]);
-          setInputMessage(""); // Clear the input field after sending
-        } else {
-          console.error("Failed to send message:", response.statusText);
+
+            const data = {
+                value: inputMessage.trim(),
+                date: new Date().toISOString(),
+                user: "ghaith@ensit.u-tunis.tn",
+                room: room, // Set the room value here
+            };
+
+            console.log("Sending data:", data); // Log the data before sending
+
+            const response = await axios.post(
+                "http://127.0.0.1:8000/chatting/sendMessage/",
+                data,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Token ${authToken}`,
+                    },
+                }
+            );
+
+            if (response.status === 201) {
+                // Make a request to the chatbot API with the user's message
+                const chatbotResponse = await axios.post(
+                    "http://127.0.0.1:8000/chatting/chatbot_endpoint/",
+                    { message: inputMessage.trim() }
+                );
+
+                // Update the messages state with the sent message and the chatbot's response
+                setMessages([
+                    ...messages,
+                    { value: inputMessage.trim(), user: "user" }, // User's message
+                    { value: chatbotResponse.data.response, user: "bot" } // Chatbot's response
+                ]);
+
+                setInputMessage(""); // Clear the input field after sending
+            } else {
+                console.error("Failed to send message:", response.statusText);
+            }
+        } catch (error) {
+            console.error("Failed to send message:", error);
         }
-      } catch (error) {
-        console.error("Failed to send message:", error);
-      }
     }
-  };
+};
+
   
   
   useEffect(() => {
@@ -340,7 +345,7 @@ const Chatbot = () => {
                         <div
                           key={index}
                           className={`message ${
-                            message.user === "ghaith@ensit.u-tunis.tn"
+                            message.user === "user"
                               ? "message-right"
                               : "message-left"
                           }`}
