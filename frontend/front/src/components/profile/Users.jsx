@@ -403,7 +403,7 @@ const Users = () => {
                       type="text"
                       value={userData.firstName}
                       readOnly
-                      className="form-control"
+                      // className="form-control"
                     />
                   </div>
                   <div className="col-md-4">

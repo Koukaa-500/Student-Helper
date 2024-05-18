@@ -3,7 +3,7 @@ import "../global.css";
 import logo from "../../assets/logo.png";
 import image from "../../assets/image.png";
 import axios from "axios";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 const client = axios.create({
   baseURL: "http://127.0.0.1:8000",
 });
@@ -99,9 +99,9 @@ const StepTwo = ({ formData, handleChange, handlePrevStep, handleSubmit }) => (
                 background: "#FDF8EE",
                 borderRadius: 10,
                 borderTop: "1px black solid",
-                            borderLeft: "1px black solid",
-                            borderBottom: "1px black solid",
-                            borderRight: "1px black solid",
+                borderLeft: "1px black solid",
+                borderBottom: "1px black solid",
+                borderRight: "1px black solid",
               }}
             />
           </div>
@@ -122,9 +122,9 @@ const StepTwo = ({ formData, handleChange, handlePrevStep, handleSubmit }) => (
                 background: "#FDF8EE",
                 borderRadius: 10,
                 borderTop: "1px black solid",
-                            borderLeft: "1px black solid",
-                            borderBottom: "1px black solid",
-                            borderRight: "1px black solid",
+                borderLeft: "1px black solid",
+                borderBottom: "1px black solid",
+                borderRight: "1px black solid",
               }}
             />
           </div>
@@ -145,19 +145,19 @@ const StepTwo = ({ formData, handleChange, handlePrevStep, handleSubmit }) => (
                 background: "#FDF8EE",
                 borderRadius: 10,
                 borderTop: "1px black solid",
-                            borderLeft: "1px black solid",
-                            borderBottom: "1px black solid",
-                            borderRight: "1px black solid",
+                borderLeft: "1px black solid",
+                borderBottom: "1px black solid",
+                borderRight: "1px black solid",
               }}
               required
-            > 
+            >
               <option >sector</option>
-              <option value="it">Software Engineering</option>
-              <option value="elec">Electrical Engineering</option>
-              <option value="mec">Mechanical Engineering</option>
-              <option value="civil">Civil Engineering</option>
-              <option value="indus">Industrial Engineering</option>
-              <option value="math">Mathematical Engineering</option>
+              <option value="CS">Software Engineering</option>
+              <option value="Elec">Electrical Engineering</option>
+              <option value="Mec">Mechanical Engineering</option>
+              <option value="Civil">Civil Engineering</option>
+              <option value="Indus">Industrial Engineering</option>
+              <option value="App Math">Mathematical Engineering</option>
             </select>
           </div>
         </div>
@@ -174,13 +174,13 @@ const StepTwo = ({ formData, handleChange, handlePrevStep, handleSubmit }) => (
                 background: "#FDF8EE",
                 borderRadius: 10,
                 borderTop: "1px black solid",
-                            borderLeft: "1px black solid",
-                            borderBottom: "1px black solid",
-                            borderRight: "1px black solid",
+                borderLeft: "1px black solid",
+                borderBottom: "1px black solid",
+                borderRight: "1px black solid",
               }}
               required
             >
-              
+
               <option value="first">First Year</option>
               <option value="second">Second Year</option>
             </select>
@@ -193,7 +193,7 @@ const StepTwo = ({ formData, handleChange, handlePrevStep, handleSubmit }) => (
           className="button"
           type="submit"
           style={{
-            marginLeft:"2Linkpx",
+            marginLeft: "2Linkpx",
             width: 207,
             height: 50,
             background: "#FDF8EE",
@@ -208,7 +208,7 @@ const StepTwo = ({ formData, handleChange, handlePrevStep, handleSubmit }) => (
           type="button"
           onClick={handlePrevStep}
           style={{
-            marginLeft:"10px",
+            marginLeft: "10px",
             width: 207,
             height: 50,
             background: "#FDF8EE",
@@ -255,39 +255,39 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     axios.post('http://127.0.0.1:8000/accounts/signup', formData)
-  .then(response => {
-    console.log(response.data);
-    window.location.href = "/login";
-    // Handle successful signup
-  })
-  .catch(error => {
-    console.error('Error:', error.response ? error.response.data : error);
-    // Handle error
-  });
+      .then(response => {
+        console.log(response.data);
+        window.location.href = "/login";
+        // Handle successful signup
+      })
+      .catch(error => {
+        console.error('Error:', error.response ? error.response.data : error);
+        // Handle error
+      });
 
   };
 
   return (
     <>
-      
+
       <div className="rectangle">
-            
-            
-            <img
-              style={{
-                width: "150",
-                height: "150",
-                borderRadius: "13",
-                marginLeft:"16%"
-              }}
-              src={logo}
-              alt=""
-            />
-          
-          
-        </div>
-      
-      <div className="container" style={{marginLeft:"5%"}}>
+
+
+        <img
+          style={{
+            width: "150",
+            height: "150",
+            borderRadius: "13",
+            marginLeft: "16%"
+          }}
+          src={logo}
+          alt=""
+        />
+
+
+      </div>
+      <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="16454ecf-7de3-450a-ab68-927931473442" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+      <div className="container" style={{ marginLeft: "5%" }}>
         <div className="row">
           <div className="boxn">
             <div className="boxn-body">

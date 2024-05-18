@@ -114,95 +114,95 @@ const Chatbot = () => {
   const sendMessage = async () => {
     // Check if room is not set, then create a new room
     if (!room) {
-        await createRoom();
+      await createRoom();
     }
 
     if (inputMessage.trim() !== "") {
-        try {
-            const authToken = getAuthToken();
-            if (!authToken) {
-                console.error("No authentication token found.");
-                return;
-            }
-
-            const data = {
-                value: inputMessage.trim(),
-                date: new Date().toISOString(),
-                user: "ghaith@ensit.u-tunis.tn",
-                room: room, // Set the room value here
-            };
-
-            console.log("Sending data:", data); // Log the data before sending
-
-            const response = await axios.post(
-                "http://127.0.0.1:8000/chatting/sendMessage/",
-                data,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Token ${authToken}`,
-                    },
-                }
-            );
-
-            if (response.status === 201) {
-                // Make a request to the chatbot API with the user's message
-                const chatbotResponse = await axios.post(
-                    "http://127.0.0.1:8000/chatting/chatbot_endpoint/",
-                    { message: inputMessage.trim() }
-                );
-
-                // Update the messages state with the sent message and the chatbot's response
-                setMessages([
-                    ...messages,
-                    { value: inputMessage.trim(), user: "user" }, // User's message
-                    { value: chatbotResponse.data.response, user: "bot" } // Chatbot's response
-                ]);
-
-                setInputMessage(""); // Clear the input field after sending
-            } else {
-                console.error("Failed to send message:", response.statusText);
-            }
-        } catch (error) {
-            console.error("Failed to send message:", error);
-        }
-    }
-};
-
-  
-  
-  useEffect(() => {
-    const saveConversationDetails = async () => {
-      setIsLoading(true);
       try {
+        const authToken = getAuthToken();
+        if (!authToken) {
+          console.error("No authentication token found.");
+          return;
+        }
+
+        const data = {
+          value: inputMessage.trim(),
+          date: new Date().toISOString(),
+          user: "ghaith@ensit.u-tunis.tn",
+          room: room, // Set the room value here
+        };
+
+        console.log("Sending data:", data); // Log the data before sending
+
         const response = await axios.post(
-          `http://127.0.0.1:8000/chatting/save_room_conversation/${room}/`,
-          { messages: messages },
+          "http://127.0.0.1:8000/chatting/sendMessage/",
+          data,
           {
             headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Token ${getAuthToken()}`,
+              "Content-Type": "application/json",
+              Authorization: `Token ${authToken}`,
             },
           }
         );
 
-        if (response.status === 200) {
-          setSuccess(true);
+        if (response.status === 201) {
+          // Make a request to the chatbot API with the user's message
+          const chatbotResponse = await axios.post(
+            "http://127.0.0.1:8000/chatting/chatbot_endpoint/",
+            { message: inputMessage.trim() }
+          );
+
+          // Update the messages state with the sent message and the chatbot's response
+          setMessages([
+            ...messages,
+            { value: inputMessage.trim(), user: "user" }, // User's message
+            { value: chatbotResponse.data.response, user: "bot" } // Chatbot's response
+          ]);
+
+          setInputMessage(""); // Clear the input field after sending
         } else {
-          setError('Failed to save conversation details');
+          console.error("Failed to send message:", response.statusText);
         }
       } catch (error) {
-        console.error('Failed to save conversation details:', error);
-        setError('Failed to save conversation details');
-      } finally {
-        setIsLoading(false);
+        console.error("Failed to send message:", error);
       }
-    };
-
-    if (messages && messages.length > 0) {
-      saveConversationDetails();
     }
-  }, [room, messages]);
+  };
+
+
+
+  // useEffect(() => {
+  //   const saveConversationDetails = async () => {
+  //     setIsLoading(true);
+  //     try {
+  //       const response = await axios.post(
+  //         `http://127.0.0.1:8000/chatting/save_room_conversation/${room}/`,
+  //         { messages: messages },
+  //         {
+  //           headers: {
+  //             'Content-Type': 'application/json',
+  //             Authorization: `Token ${getAuthToken()}`,
+  //           },
+  //         }
+  //       );
+
+  //       if (response.status === 200) {
+  //         setSuccess(true);
+  //       } else {
+  //         setError('Failed to save conversation details');
+  //       }
+  //     } catch (error) {
+  //       console.error('Failed to save conversation details:', error);
+  //       setError('Failed to save conversation details');
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+
+  //   if (messages && messages.length > 0) {
+  //     saveConversationDetails();
+  //   }
+  // }, [room, messages]);
 
 
   const handleMessageClick = (message) => {
@@ -216,7 +216,7 @@ const Chatbot = () => {
     //     user: "bot"
     //   }
     // ]);
-    
+
     scrollToBottom();
   }, []);
 
@@ -264,10 +264,10 @@ const Chatbot = () => {
                   </a>
                 </li>
                 <li className="nav-item">
-                <Link to="/user" style={{ textDecoration: "none" }}>
-                  <a className="nav-link  " aria-current="page" href="#">
-                    Profile
-                  </a>
+                  <Link to="/user" style={{ textDecoration: "none" }}>
+                    <a className="nav-link  " aria-current="page" href="#">
+                      Profile
+                    </a>
                   </Link>
                 </li>
               </ul>
@@ -290,65 +290,25 @@ const Chatbot = () => {
               position: "relative",
             }}
           >
-            <div
-              className="oldConversation col-md-2"
-              style={{
-                backgroundColor: "white",
-                padding: "20px",
-                height: "80vh",
-                position: "fixed",
-                left: 0,
-                overflow: "hidden",
-              }}
-            >
-              <a
-                style={{
-                  fontFamily: "fantasy",
-                  marginLeft: "70px",
-                  marginBottom: "50px",
-                }}
-              >
-                Conversations
-              </a>
-              <br></br>
-              <ul style={{ listStyle: "none", padding: 0 , marginTop:"10px"}}>
-                {messages.map((message, index) => (
-                  <li
-                    key={index}
-                    style={{
-                      marginBottom: "10px",
-                      padding: "10px",
-                      borderRadius: "5px",
-                      backgroundColor: "#FFF2D7",
-                      boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => handleMessageClick(message)}
-                  >
-                    {message.value}
-                  </li>
-                ))}
-              </ul>
-            </div>
+
             <div
               className={"App loaded col-md-10"}
-              style={{ transform: "translate(0%, -10%)" }}
+              style={{ transform: "translate(-8%, -10%)" }}
             >
               <div className="centered-container">
                 <div
                   className={`chat-container ${isLoaded ? "loaded" : ""}`}
-                  style={{ width: "50vw", height: "60vh" ,marginTop:"20px"}}
+                  style={{ width: "50vw", height: "60vh", marginTop: "20px" }}
                 >
                   <div className={`messages ${isLoaded ? "loaded" : ""}`}>
                     {messages.map((message, index) => {
                       return (
                         <div
                           key={index}
-                          className={`message ${
-                            message.user === "user"
+                          className={`message ${message.user === "user"
                               ? "message-right"
                               : "message-left"
-                          }`}
+                            }`}
                           onClick={() => handleMessageClick(message)}
                           style={{
                             backgroundColor:

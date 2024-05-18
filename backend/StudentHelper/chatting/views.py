@@ -1,3 +1,5 @@
+import asyncio
+from asgiref.sync import async_to_sync
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -12,6 +14,7 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain_anthropic import ChatAnthropic
+
 
 @api_view(['GET'])
 def get_messages(request, room):
@@ -47,18 +50,19 @@ def chatbot_endpoint(request):
         PROMPT_TEMPLATE = """
         You Are Student Helper ChatBot (ENSIT edition),
         Answer the question based on the following context if it has any relevant information to answer the question. 
-        Otherwise, answer the question based on your knowledge without making it obvious that you didn't:
+        Otherwise, Answer as if you were a helpful student assistant in any course:
 
         {context}
 
         ---
 
-        Answer the question based on the above context, Answer in the same language in the question: {question}
+        Answer in English: {question}
         """
+        
         embedding_function = OpenAIEmbeddings()
         db = Chroma(persist_directory=CHROMA_PATH, embedding_function=embedding_function)
         
-        results = db.similarity_search_with_relevance_scores(query_text, k=3)
+        results = async_to_sync(db.asimilarity_search_with_score)(query_text, k=3)
         context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
         
         
@@ -66,7 +70,7 @@ def chatbot_endpoint(request):
         prompt = prompt_template.format(context=context_text, question=query_text)
         sources = [doc.metadata.get("source", None) for doc, _score in results]
         sources = list(set(sources))
-        # print(sources)
+        print(sources)
         chat =ChatOpenAI(model="gpt-3.5-turbo",temperature=0.4)
         response_text = chat.invoke(prompt).content 
         # response_text += f"\nSources: {', '.join(sources)}"
